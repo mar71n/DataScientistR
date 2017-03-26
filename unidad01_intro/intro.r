@@ -48,3 +48,13 @@ seq(length.out = 10 )
 rep(c(2,3,4),c(3,2,1))
 repetidos <- rep(c(2,3,4),c(3,2,1))
 unique(repetidos)
+
+# descargo
+# Subte: Cronograma de servicio
+# Cronograma de servicio del Subte de Buenos Aires según período del año.
+# https://recursos-data.buenosaires.gob.ar/ckan2/subte-cronograma/cronograma-invierno.csv
+datos <- read.csv("../descargas/data/cronograma-invierno.csv",sep=";")
+
+head(datos)
+
+unique(datos$LINEA)
