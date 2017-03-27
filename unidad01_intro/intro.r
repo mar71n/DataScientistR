@@ -1,6 +1,7 @@
 # unidad 1 Elementos de sintaxis de R
 getwd()
 setwd("~/Desa/DataScientistR/")
+# setwd("../Desa/DataScientistR/")
 ls()
 
 a <- 2
@@ -10,6 +11,7 @@ ls()
 
 available.packages()
 setwd("~/Desa/DataScientistR/unidad01_intro/")
+# setwd("./unidad01_intro/")
 # redirecciono la salida a file
 cat(available.packages(), file="packages.txt")
 
