@@ -51,6 +51,7 @@ attributes(randu)
 attributes(randu)$names
 
 m <- matrix(nrow = 2, ncol = 3)
+m <- matrix(randu$x, nrow = 2, ncol = 3)
 m
 attributes(m)
 attributes(m)$dim
