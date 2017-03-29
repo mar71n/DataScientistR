@@ -53,3 +53,29 @@ which(x=="yes")
 # Valores perdidos y no procesables
 
 ls()
+
+1/Inf
+class(1/Inf)
+1*Inf
+0*Inf
+class(0*Inf)
+class(NA)
+class(NaN)
+1/0
+class(Inf)
+0*NA
+1/NA
+1+NA
+is.na(NA)
+is.na(NaN)
+is.nan(NaN)
+is.nan(NA)
+vperdidos <- c(NA,NaN)
+is.na(vperdidos)
+is.nan(vperdidos)
+
+tablaVPerdidos <- cbind(is.na(vperdidos),is.nan(vperdidos))
+class(tablaVPerdidos)
+colnames(tablaVPerdidos) <- c("is.na", "is.nan")
+rownames(tablaVPerdidos) <- c("NA","NaN")
+tablaVPerdidos

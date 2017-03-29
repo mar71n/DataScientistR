@@ -1,3 +1,4 @@
+## Matrices
 ``` R
 > # Matrices
 > m <- matrix(1:5, nrow=2, ncol=3)
@@ -51,4 +52,53 @@ A B C
 > m[,"B"]
 R1 R2 
  3  4 
- ```
+```
+
+## Valores perdidos y no procesables
+``` R
+> 1/Inf
+[1] 0
+> class(1/Inf)
+[1] "numeric"
+> 1*Inf
+[1] Inf
+> 0*Inf
+[1] NaN
+> class(0*Inf)
+[1] "numeric"
+> class(NA)
+[1] "logical"
+> class(NaN)
+[1] "numeric"
+> 1/0
+[1] Inf
+> class(Inf)
+[1] "numeric"
+> 0*NA
+[1] NA
+> 1/NA
+[1] NA
+> 1+NA
+[1] NA
+
+> vperdidos <- c(NA,NaN,Inf,0,"q",1/0)
+> is.na(vperdidos)
+[1]  TRUE FALSE FALSE FALSE FALSE FALSE
+> is.nan(vperdidos)
+[1] FALSE FALSE FALSE FALSE FALSE FALSE
+> tablaVPerdidos <- cbind(is.na(vperdidos),is.nan(vperdidos))
+> class(tablaVPerdidos)
+[1] "matrix"
+> colnames(tablaVPerdidos) <- c("is.na", "is.nan")
+> rownames(tablaVPerdidos) <- c("NA","NaN", "Inf", "0", "\'q\'","1/0")
+> tablaVPerdidos
+    is.na is.nan
+NA   TRUE  FALSE
+NaN FALSE  FALSE
+Inf FALSE  FALSE
+0   FALSE  FALSE
+'q' FALSE  FALSE
+1/0 FALSE  FALSE
+> 
+```
+
