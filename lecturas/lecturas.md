@@ -3,6 +3,8 @@
 
 ### VEINTE PAQUETES DE R PARA CIENTÍFICOS DE DATOS - crítica de Gil Bellosta
 https://www.datanalytics.com/2014/03/12/veinte-paquetes-de-r-para-cientificos-de-datos/
+#### El artículo original: 20 R Packages That Should Impact Every Data Scientist - Dr. Jerry A. Smith
+https://datascientistinsights.com/2013/02/25/20-r-packages-that-should-impact-every-data-scientist/
 
 ### Dos formas de “recorrer” un arreglo en lenguaje R - El Blog de José Guerrero
 https://joseguerreroa.wordpress.com/2014/03/10/dos-formas-de-recorrer-un-arreglo-en-lenguaje-r/
