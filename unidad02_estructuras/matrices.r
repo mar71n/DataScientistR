@@ -62,6 +62,7 @@ class(0*Inf)
 class(NA)
 class(NaN)
 1/0
+0/0
 class(Inf)
 0*NA
 1/NA
@@ -70,12 +71,17 @@ is.na(NA)
 is.na(NaN)
 is.nan(NaN)
 is.nan(NA)
-vperdidos <- c(NA,NaN)
+?NaN
+vperdidos <- c(NA,NaN,Inf,0,"q",1/0)
+vperdidos
 is.na(vperdidos)
 is.nan(vperdidos)
 
 tablaVPerdidos <- cbind(is.na(vperdidos),is.nan(vperdidos))
 class(tablaVPerdidos)
 colnames(tablaVPerdidos) <- c("is.na", "is.nan")
-rownames(tablaVPerdidos) <- c("NA","NaN")
+rownames(tablaVPerdidos) <- c("NA","NaN", "Inf", "0", "\'q\'","1/0")
 tablaVPerdidos
+
+
+

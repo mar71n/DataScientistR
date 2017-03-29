@@ -81,23 +81,25 @@ R1 R2
 > 1+NA
 [1] NA
 
-> vperdidos <- c(NA,NaN,Inf,0,"q",1/0)
+> vperdidos <- c(NA,NaN,Inf,0,0/0,1/0)
+> vperdidos
+[1]  NA NaN Inf   0 NaN Inf
 > is.na(vperdidos)
-[1]  TRUE FALSE FALSE FALSE FALSE FALSE
+[1]  TRUE  TRUE FALSE FALSE  TRUE FALSE
 > is.nan(vperdidos)
-[1] FALSE FALSE FALSE FALSE FALSE FALSE
+[1] FALSE  TRUE FALSE FALSE  TRUE FALSE
 > tablaVPerdidos <- cbind(is.na(vperdidos),is.nan(vperdidos))
 > class(tablaVPerdidos)
 [1] "matrix"
 > colnames(tablaVPerdidos) <- c("is.na", "is.nan")
-> rownames(tablaVPerdidos) <- c("NA","NaN", "Inf", "0", "\'q\'","1/0")
+> rownames(tablaVPerdidos) <- c("NA","NaN", "Inf", "0", "0/0","1/0")
 > tablaVPerdidos
     is.na is.nan
 NA   TRUE  FALSE
-NaN FALSE  FALSE
+NaN  TRUE   TRUE
 Inf FALSE  FALSE
 0   FALSE  FALSE
-'q' FALSE  FALSE
+0/0  TRUE   TRUE
 1/0 FALSE  FALSE
 > 
 ```
