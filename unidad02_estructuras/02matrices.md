@@ -104,3 +104,37 @@ Inf FALSE  FALSE
 > 
 ```
 
+## Data Frames
+``` R
+> # Data Frames
+> x <- data.frame(metrica = 1:4, tipo = c(T, T, F, F))
+> x
+  metrica  tipo
+1       1  TRUE
+2       2  TRUE
+3       3 FALSE
+4       4 FALSE
+> nrow(x)
+[1] 4
+> ncol(x)
+[1] 2
+>
+```
+
+## Nombres
+``` R
+> # Nombres
+> x <- 1:3
+> names(x)
+NULL
+> class(names)
+[1] "function"
+> names
+function (x)  .Primitive("names")
+> names(x) <- c("Elemento 1", "Elemento 2", "Elemento 3")
+> x
+Elemento 1 Elemento 2 Elemento 3
+         1          2          3
+>
+```
+

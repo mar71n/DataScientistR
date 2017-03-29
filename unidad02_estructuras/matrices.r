@@ -89,4 +89,17 @@ x <- c(NA,NaN)
 
 # Data Frames
 
+x <- data.frame(metrica = 1:4, tipo = c(T, T, F, F))
+x
 
+nrow(x)
+ncol(x)
+
+# Nombres
+
+x <- 1:3
+names(x)
+class(names)
+names
+names(x) <- c("Elemento 1", "Elemento 2", "Elemento 3")
+x
