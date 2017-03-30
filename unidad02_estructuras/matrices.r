@@ -103,3 +103,22 @@ class(names)
 names
 names(x) <- c("Elemento 1", "Elemento 2", "Elemento 3")
 x
+
+# Coerción explícita
+
+x <- 0:6
+x
+class(x)
+
+as.numeric(x)
+class(as.numeric(x))
+as.logical(x)
+class(as.logical(x))
+as.character(x)
+class(as.character(x))
+
+x <- c("a","b","c")
+as.logical(x)
+as.complex(x)
+
+# Funciones

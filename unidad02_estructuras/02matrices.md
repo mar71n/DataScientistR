@@ -138,3 +138,32 @@ Elemento 1 Elemento 2 Elemento 3
 >
 ```
 
+## Coerción explícita
+``` R
+> # Coerción explícita
+> x <- 0:6
+> x
+[1] 0 1 2 3 4 5 6
+> class(x)
+[1] "integer"
+> as.numeric(x)
+[1] 0 1 2 3 4 5 6
+> class(as.numeric(x))
+[1] "numeric"
+> as.logical(x)
+[1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+> class(as.logical(x))
+[1] "logical"
+> as.character(x)
+[1] "0" "1" "2" "3" "4" "5" "6"
+> class(as.character(x))
+[1] "character"
+> x <- c("a","b","c")
+> as.logical(x)
+[1] NA NA NA
+> as.complex(x)
+[1] NA NA NA
+Warning message:
+NAs introduced by coercion 
+> 
+```
