@@ -167,3 +167,46 @@ Warning message:
 NAs introduced by coercion 
 > 
 ```
+
+## Funciones
+``` R
+> # Funciones
+> f <- function(a, b=1, c=2, d=NULL){
++   a^2 + b*c
++ }
+> f()
+Error in f() : argument "a" is missing, with no default
+> f(2)
+[1] 6
+> formals(f)
+$a
+
+$b
+[1] 1
+$c
+[1] 2
+$d
+NULL
+
+> args(f)
+function (a, b = 1, c = 2, d = NULL) 
+NULL
+> formals(f)$a = 2
+> args(f)
+function (a = 2, b = 1, c = 2, d = NULL) 
+NULL
+> f()
+[1] 6
+
+> # Only closures have formals, not primitive functions.
+> args(names)
+function (x) 
+NULL
+> formals(names)
+NULL
+
+> # An anonymous function:
+> (function(x, y){ z <- x^2 + y^2; x+y+z })(0:7, 1)
+[1]  2  4  8 14 22 32 44 58
+> 
+```

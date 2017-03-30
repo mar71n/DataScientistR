@@ -122,3 +122,28 @@ as.logical(x)
 as.complex(x)
 
 # Funciones
+?function(){}
+
+f <- function(a, b=1, c=2, d=NULL){
+  a^2 + b*c
+}
+f()
+f(2)
+
+formals(f)
+args(f)
+
+formals(f)$a = 2
+args(f)
+f()
+
+# Only closures have formals, not primitive functions.
+args(names)
+formals(names)
+
+# An anonymous function:
+(function(x, y){ z <- x^2 + y^2; x+y+z })(0:7, 1)
+
+?apply
+
+browser()
