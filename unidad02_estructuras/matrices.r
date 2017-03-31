@@ -146,4 +146,30 @@ formals(names)
 
 ?apply
 
-browser()
+# Interfaces de conección
+
+con <- file("../descargas/data/cronograma-invierno.csv")
+class(con)
+con
+data <- read.csv2(con)
+head(data)
+con
+close(con)
+
+con <- gzfile("../descargas/data/cronograma-invierno.csv.gz")
+class(con)
+con
+x <- readLines(con, 10)
+x
+con
+close(con)
+con
+
+con <- url("http://stat.ethz.ch/R-manual/", "r")
+con
+x <- readLines(con, 10)
+x
+con
+close(con)
+con
+

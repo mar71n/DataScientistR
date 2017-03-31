@@ -210,3 +210,131 @@ NULL
 [1]  2  4  8 14 22 32 44 58
 > 
 ```
+
+## Interfaces de conección
+
+``` R
+> # Interfaces de conección
+> con <- file("../descargas/data/cronograma-invierno.csv")
+> class(con)
+[1] "file"       "connection"
+> con
+                                description 
+"../descargas/data/cronograma-invierno.csv" 
+                                      class 
+                                     "file" 
+                                       mode 
+                                        "r" 
+                                       text 
+                                     "text" 
+                                     opened 
+                                   "closed" 
+                                   can read 
+                                      "yes" 
+                                  can write 
+                                      "yes" 
+> data <- read.csv2(con)
+> head(data)
+  PERIODO LINEA     DIA ORDEN TREN            SAL_C1   SAL_C2 INT_C1 INT_C2
+1    2015     A DOMINGO     1    4 SALIDA ADELANTADA 07:45:00              
+2    2015     A DOMINGO     2    5          07:32:00 08:00:30              
+3    2015     A DOMINGO     3    6          07:42:00 08:09:30         09:00
+4    2015     A DOMINGO     4    7          07:52:00 08:20:00         10:30
+5    2015     A DOMINGO     5    1          08:00:00 08:28:00  08:00  08:00
+6    2015     A DOMINGO     6    2          08:08:00 08:36:00  08:00  08:00
+  FORM OBSERVACIONES
+1    5              
+2    5              
+3    5              
+4    5              
+5    5              
+6    5              
+> con
+Error in summary.connection(x) : invalid connection
+> close(con)
+Error in close.connection(con) : invalid connection
+>  
+> con <- gzfile("../descargas/data/cronograma-invierno.csv.gz")
+> class(con)
+[1] "gzfile"     "connection"
+> con
+                                   description 
+"../descargas/data/cronograma-invierno.csv.gz" 
+                                         class 
+                                      "gzfile" 
+                                          mode 
+                                          "rb" 
+                                          text 
+                                        "text" 
+                                        opened 
+                                      "closed" 
+                                      can read 
+                                         "yes" 
+                                     can write 
+                                         "yes" 
+> x <- readLines(con, 10)
+> x
+ [1] "PERIODO;LINEA;DIA;ORDEN;TREN;SAL_C1;SAL_C2;INT_C1;INT_C2;FORM;OBSERVACIONES"
+ [2] "2015;A;DOMINGO;1;4;SALIDA ADELANTADA;07:45:00;;;5;"                         
+ [3] "2015;A;DOMINGO;2;5;07:32:00;08:00:30;;;5;"                                  
+ [4] "2015;A;DOMINGO;3;6;07:42:00;08:09:30;;09:00;5;"                             
+ [5] "2015;A;DOMINGO;4;7;07:52:00;08:20:00;;10:30;5;"                             
+ [6] "2015;A;DOMINGO;5;1;08:00:00;08:28:00;08:00;08:00;5;"                        
+ [7] "2015;A;DOMINGO;6;2;08:08:00;08:36:00;08:00;08:00;5;"                        
+ [8] "2015;A;DOMINGO;7;3;08:16:00;08:44:00;08:00;08:00;5;"                        
+ [9] "2015;A;DOMINGO;8;4;08:24:00;08:52:00;08:00;08:00;5;"                        
+[10] "2015;A;DOMINGO;9;5;08:32:00;09:00:00;08:00;08:00;5;"                        
+> con
+                                   description 
+"../descargas/data/cronograma-invierno.csv.gz" 
+                                         class 
+                                      "gzfile" 
+                                          mode 
+                                          "rb" 
+                                          text 
+                                        "text" 
+                                        opened 
+                                      "closed" 
+                                      can read 
+                                         "yes" 
+                                     can write 
+                                          "no" 
+> close(con)
+> con
+Error in summary.connection(x) : invalid connection
+> con <- url("http://stat.ethz.ch/R-manual/", "r")
+> con
+                    description                           class 
+"http://stat.ethz.ch/R-manual/"                   "url-wininet" 
+                           mode                            text 
+                            "r"                          "text" 
+                         opened                        can read 
+                       "opened"                           "yes" 
+                      can write 
+                           "no" 
+> x <- readLines(con, 10)
+> x
+ [1] "<HTML>"                                                              
+ [2] "<!-- $Id: index.html,v 1.13 2002/08/19 08:02:07 local Exp root $ -->"
+ [3] "<HEAD>"                                                              
+ [4] "<TITLE>The R manual -- DEVELOPMENT Versions </TITLE>"                
+ [5] "</HEAD>"                                                             
+ [6] ""                                                                    
+ [7] "<BODY TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" LINK=\"#0000F0\""         
+ [8] "VLINK=\"#660066\" ALINK=\"#FF0000\" BACKGROUND=\"white\" >"          
+ [9] ""                                                                    
+[10] "<h1 align=center>"                                                   
+> con
+                    description                           class 
+"http://stat.ethz.ch/R-manual/"                   "url-wininet" 
+                           mode                            text 
+                            "r"                          "text" 
+                         opened                        can read 
+                       "opened"                           "yes" 
+                      can write 
+                           "no" 
+> close(con)
+> con
+Error in summary.connection(x) : invalid connection
+> 
+```
