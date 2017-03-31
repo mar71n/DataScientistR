@@ -209,6 +209,49 @@ NULL
 > (function(x, y){ z <- x^2 + y^2; x+y+z })(0:7, 1)
 [1]  2  4  8 14 22 32 44 58
 > 
+
+# lapply
+> set.seed(1014)
+> df <- data.frame(replicate(6, sample(c(1:10, -99), 6, rep = TRUE)))
+> names(df) <- letters[1:6]
+> df
+   a   b  c   d   e   f
+1  8   6  4   5   2   3
+2  1   3 10 -99  10   9
+3 10   8 10   4   3   4
+4  1   2  2 -99   3  10
+5 10 -99 10   3   1   4
+6  2   4  9   1 -99 -99
+> df[df==-99]
+[1] -99 -99 -99 -99 -99
+
+> fix_missing <- function(x) {
++   x[x == -99] <- NA
++   x
++ }
+
+> df2 <- df
+# aplico fix_missing a todos
+> df[] <- lapply(df, fix_missing)
+> df
+   a  b  c  d  e  f
+1  8  6  4  5  2  3
+2  1  3 10 NA 10  9
+3 10  8 10  4  3  4
+4  1  2  2 NA  3 10
+5 10 NA 10  3  1  4
+6  2  4  9  1 NA NA
+
+# aplico fix_missing solo a columan "d"
+> df2[["d"]] <- lapply(df2[["d"]], fix_missing)
+> df2
+   a   b  c  d   e   f
+1  8   6  4  5   2   3
+2  1   3 10 NA  10   9
+3 10   8 10  4   3   4
+4  1   2  2 NA   3  10
+5 10 -99 10  3   1   4
+6  2   4  9  1 -99 -99
 ```
 
 ## Interfaces de conección
