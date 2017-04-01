@@ -38,6 +38,8 @@ l[[3]]
 class(l[[3]])
 
 # Factores
+# son como tablas dinamicas
+# guarda efecientemente
 ?factor
 
 x <- factor(c("yes","yes","no","yes","no"))
@@ -84,6 +86,9 @@ class(tablaVPerdidos)
 colnames(tablaVPerdidos) <- c("is.na", "is.nan")
 rownames(tablaVPerdidos) <- c("NA","NaN", "Inf", "0", "0/0","1/0")
 tablaVPerdidos
+
+is.primitive(colnames)
+is.primitive(names)
 
 x <- c(NA,NaN)
 
