@@ -34,3 +34,44 @@ names(resultado)
 
 rm("resultado","ejercicio02")
 ls()
+
+
+test <- read.table(header=TRUE, text='
+   colA  colB
+      4    10
+      7     4 
+      7    22 
+      8    16
+      9    10
+     10    18
+')
+
+test1 <- test
+test2 <- test
+test3 <- test
+test4 <- test
+
+class(test1[["colA"]])
+class(test1["colA"])
+
+test1 <- data.frame(test1, colC = cbind(test1[["colA"]]+ test1[["colB"]]))
+test1
+
+test2 <- data.frame(test2, colC = cbind(test2["colA"] + test2["colB"]))
+test2
+
+test3 <- data.frame(test3, colC = test3["colA"] + test3["colB"])
+test3
+
+test4 <- data.frame(test4, colC = test4[["colA"]]+ test4[["colB"]])
+test4
+
+colC = test1[["colA"]] + test1[["colB"]]
+class(colC)
+
+colC = test1["colA"] + test1["colB"]
+class(colC)
+
+str(test)
+test[["colA"]]
+test$colA
