@@ -52,3 +52,53 @@
 NULL
 > rm("resultado","ejercicio02")
 ```
+
+
+Consulta en el foro
+``` R
+> test <- read.table(header=TRUE, text='
++    colA  colB
++       4    10
++       7     4 
++       7    22 
++       8    16
++       9    10
++      10    18
++ ')
+
+> test1 <- test
+> test2 <- test
+
+> class(test1[["colA"]])
+[1] "integer"
+> class(test1["colA"])
+[1] "data.frame"
+
+> test1 <- data.frame(test1, colC = cbind(test1[["colA"]]+ test1[["colB"]]))
+> test1
+  colA colB colC
+1    4   10   14
+2    7    4   11
+3    7   22   29
+4    8   16   24
+5    9   10   19
+6   10   18   28
+
+> test2 <- data.frame(test2, colC = cbind(test2["colA"] + test2["colB"]))
+> test2
+  colA colB colA.1
+1    4   10     14
+2    7    4     11
+3    7   22     29
+4    8   16     24
+5    9   10     19
+6   10   18     28
+
+> colC = test1[["colA"]] + test1[["colB"]]
+> class(colC)
+[1] "integer"
+
+> colC = test1["colA"] + test1["colB"]
+> class(colC)
+[1] "data.frame"
+```
