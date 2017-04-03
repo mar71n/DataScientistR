@@ -1,23 +1,27 @@
-# unidad 3
-# install.packages("RODBC")
-# no lo instala bien
-# http://r.789695.n4.nabble.com/Problem-installing-RODBC-package-under-UBUNTU-td892215.html
-# lo instalo con 
-# $ sudo apt-get install r-cran-rodbc
+# Unidad 3
 
-library(RODBC)
+file.exists("../descargas/unidad03/Mascotas_2a/ClasificacionProductos_csv.txt")
+ClasificacionProductos <- read.csv2("../descargas/unidad03/Mascotas_2a/ClasificacionProductos_csv.txt")
+head(ClasificacionProductos)
+tail(ClasificacionProductos)
+names(ClasificacionProductos)
 
-file.exists("../descargas/unidad03/Mascotas_2a/Mascotas2.accdb") 
-mdbConnect <- odbcConnect("../descargas/unidad03/Mascotas_2a/Mascotas2", readOnlyOptimize=TRUE) 
-mdbConnect
-?odbcDriverConnect
-?odbcDriverConnect
+ProductosxPagina <- read.csv2("../descargas/unidad03/Mascotas_2a/ProductosxPagina_csv.txt")
+head(ProductosxPagina)
+tail(ProductosxPagina)
+names(ProductosxPagina)
 
-odbcDriverConnect("driver=FreeTDS;Server=hostname;database='../descargas/unidad03/Mascotas_2a/Mascotas2'")
+Navegacion <- read.csv2("../descargas/unidad03/Mascotas_2a/Navegacion_csv.txt")
+head(Navegacion)
+tail(Navegacion)
+names(Navegacion)
 
-uid=""
-pwd=""
-con =paste("Driver={Microsoft Access Driver};Dbq='", file.path('../descargas/unidad03/Mascotas_2a/Mascotas2'), "';Uid=", uid, ";Pwd=", pwd, ";", sep = "")
-conn=odbcDriverConnect(con)
+Duenos <- read.csv2("../descargas/unidad03/Mascotas_2a/Duenos_csv.txt")
+head(Duenos)
+tail(Duenos)
+names(Duenos)
 
-con
+Mascotas <- read.csv2("../descargas/unidad03/Mascotas_2a/Mascotas_csv.txt")
+head(Mascotas)
+tail(Mascotas)
+names(Mascotas)
