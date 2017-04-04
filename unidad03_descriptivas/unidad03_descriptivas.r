@@ -1,27 +1,49 @@
 # Unidad 3
 
-file.exists("../descargas/unidad03/Mascotas_2a/ClasificacionProductos_csv.txt")
-ClasificacionProductos <- read.csv2("../descargas/unidad03/Mascotas_2a/ClasificacionProductos_csv.txt")
-head(ClasificacionProductos)
-tail(ClasificacionProductos)
-names(ClasificacionProductos)
+# Analisis exploratorio
 
-ProductosxPagina <- read.csv2("../descargas/unidad03/Mascotas_2a/ProductosxPagina_csv.txt")
-head(ProductosxPagina)
-tail(ProductosxPagina)
-names(ProductosxPagina)
+library(datasets)
+data(iris)
 
-Navegacion <- read.csv2("../descargas/unidad03/Mascotas_2a/Navegacion_csv.txt")
-head(Navegacion)
-tail(Navegacion)
-names(Navegacion)
+str(iris)
 
-Duenos <- read.csv2("../descargas/unidad03/Mascotas_2a/Duenos_csv.txt")
-head(Duenos)
-tail(Duenos)
-names(Duenos)
+ls(all.names=TRUE)
+names(iris)
+str(iris[["Species"]])
+attributes(iris[["Species"]])
+str(attributes(iris[["Species"]])$levels)
+class(attributes(iris[["Species"]])$levels)
+attributes(iris[["Species"]])$levels
 
-Mascotas <- read.csv2("../descargas/unidad03/Mascotas_2a/Mascotas_csv.txt")
-head(Mascotas)
-tail(Mascotas)
-names(Mascotas)
+class(iris)
+nrow(iris)
+ncol(iris)
+names(iris)
+
+class(iris[["Sepal.Length"]])
+range(iris[["Sepal.Length"]])
+
+table(iris[["Species"]])
+table(iris[["Sepal.Length"]])
+
+head(iris)
+attach(iris)
+
+# Analissi estadistico
+
+median(iris[["Sepal.Length"]])
+
+mean(iris[["Sepal.Length"]])
+
+sd(iris[["Sepal.Length"]])
+
+summary(iris)
+
+hist(iris$Sepal.Length,breaks=20)
+
+qqnorm(iris$Sepal.Length)
+
+boxplot(Petal.Length ~ Species , data = iris, ylab="Petal.Length", varwith=TRUE)
+
+plot(Petal.Length ~ Sepal.Length, data = iris, col = "red")
+
