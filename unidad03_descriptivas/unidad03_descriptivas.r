@@ -47,3 +47,14 @@ boxplot(Petal.Length ~ Species , data = iris, ylab="Petal.Length", varwith=TRUE)
 
 plot(Petal.Length ~ Sepal.Length, data = iris, col = "red")
 
+pairs(iris)
+
+# Distribuciones
+
+pnorm(27.4, mean=50, sd=20)
+
+?pnorm
+
+plot(function(x) pnorm(x, log.p = TRUE), -50, 10, main = "log { Normal Cumulative }")
+plot(function(x) dnorm(x, mean=50, sd=30), -50, 150, main = "dnorm")
+plot(function(x) pnorm(x, mean=50, sd=30), -50, 150, main = "pnorm")
