@@ -81,3 +81,41 @@ plot(function(x) pnorm(x, mean=50, sd=30), -50, 150, main = "pnorm")
 
 # Introducción a la regresión lineál
 
+install.packages("UsingR")
+library(UsingR)
+
+data(diamond)
+head(diamond)
+summary(diamond)
+plot(diamond$carat, diamond$price, xlab = "carats", ylab = "price", 
+                                   bg = "lightblue", col = "black",
+                                   cex = 1.1, pch = 21, frame = FALSE)
+
+lm(price ~ carat, data = diamond)
+plot(diamond$carat, diamond$price, xlab = "carats", ylab = "price", 
+                                   bg = "lightblue", col = "black",
+                                   cex = 1.1, pch = 21, frame = FALSE)
+abline(lm(price ~ carat, data = diamond),lwd=2)
+
+?I
+class(diamond$carat)
+class(I(diamond$carat - mean(diamond$carat)))
+class(diamond$carat - mean(diamond$carat))
+
+fit2 <- lm(price ~ I(carat - mean(carat)), data = diamond)
+coef(fit2)
+
+x <- diamond$carat - mean(diamond$carat)
+fit2 <- lm(price ~ x, data = diamond)
+coef(fit2)
+
+fit <- lm(price ~ carat, data = diamond)
+coef(fit)
+
+newx <- c(0.16, 0.27, 0.34)
+coef(fit)[1] + coef(fit)[2] * newx
+
+predict(fit, newdata = data.frame(carat=newx))
+
+str(fit)
+
