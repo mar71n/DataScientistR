@@ -32,10 +32,30 @@ attach(iris)
 # Analissi estadistico
 
 median(iris[["Sepal.Length"]])
+?median
+median(1:4)
+median(c(1:4,100,1000))
 
 mean(iris[["Sepal.Length"]])
+?mean
+x <- c(0:10, 50)
+xm <- mean(x)
+c(xm, mean(x, trim = 0.10))
+x <- seq(0.1,10,0.1)
+str(x)
+mean(log(x))
+x01 <- x[2:99]
+x01
+mean(log(x01))
+mean(log(x), trim = 0.01)
+x10 <- x[11:90]
+x10
+mean(log(x10))
+mean(log(x), trim = 0.1)
 
 sd(iris[["Sepal.Length"]])
+?sd
+sd(1:2) ^ 2
 
 summary(iris)
 
@@ -58,3 +78,6 @@ pnorm(27.4, mean=50, sd=20)
 plot(function(x) pnorm(x, log.p = TRUE), -50, 10, main = "log { Normal Cumulative }")
 plot(function(x) dnorm(x, mean=50, sd=30), -50, 150, main = "dnorm")
 plot(function(x) pnorm(x, mean=50, sd=30), -50, 150, main = "pnorm")
+
+# Introducción a la regresión lineál
+
