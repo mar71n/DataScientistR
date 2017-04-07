@@ -133,22 +133,32 @@ The following objects are masked from iris (pos = 3):
                 
 ```
                 
+``` R
 > hist(iris$Sepal.Length,breaks=20)
+```
  
-<img src="./graficos/graph5.png" />
+<img src="./graficos/graph5.png" width="30%" />
 
+``` R
 > qqnorm(iris$Sepal.Length)
+```
 
-<img src="./graficos/graph6.png" />
+<img src="./graficos/graph6.png" width="30%" />
 
+``` R
 > boxplot(Petal.Length ~ Species , data = iris, ylab="Petal.Length", varwith=TRUE)
+```
 
-<img src="./graficos/graph7.png" />
+<img src="./graficos/graph7.png" width="30%" />
 
+``` R
 > plot(Petal.Length ~ Sepal.Length, data = iris, col = "red")
+```
 
-<img src="./graficos/graph8.png" />
+<img src="./graficos/graph8.png" width="30%" />
 
+``` R
 > pairs(iris)
+```
 
-<img src="./graficos/graph9.png" />
+<img src="./graficos/graph9.png" width="30%" />
