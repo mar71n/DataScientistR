@@ -43,3 +43,69 @@ names(res) <- c(10,20,30,40,80,160,1000,2000,10000)
 plot(res,type="h")
 
 ## Promedio
+
+# Ejercicio 1.2.3
+k <- 100
+x <- sample(1:6,k,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+x
+sum(x)
+length(x)
+mean(x)
+
+promedio <- function(k){
+  x <- sample(1:6,k,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+  mean(x)
+}
+
+promedio (10)
+promedios <- vapply(list(10,20,30,40,80,160,1000,2000,10000),promedio,c(1))
+names(promedios) <- c(10,20,30,40,80,160,1000,2000,10000)
+promedios
+
+plot(promedios, type="h")
+barplot(promedios, col=c("lightblue1","lightblue2"))
+
+# Ejercicio 1.2.6
+
+?sd
+k <- 100
+x <- sample(1:6,k,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+x
+sum(x)
+length(x)
+mean(x)
+sd(x)
+
+desviostd <- function(k){
+  x <- sample(1:6,k,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+  sd(x)
+}
+
+desvios <- vapply(list(10,20,30,40,80,160,1000,2000,10000),desviostd,c(1))
+names(desvios) <- c(10,20,30,40,80,160,1000,2000,10000)
+desvios
+
+barplot(desvios, ylim=c(0,2))
+
+# Ejercicio 1.2.7
+
+k <- 10
+x <- sample(1:6,k,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+tx <- table(x)
+
+barplot(tx)
+
+enetiradas <- function(n){
+  x <- sample(1:6,n,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+  table(x)
+}
+
+par(mfrow=c(2,3))
+barplot(enetiradas(10), main="10")
+barplot(enetiradas(20), main="20")
+barplot(enetiradas(40), main="40")
+barplot(enetiradas(80), main="80")
+barplot(enetiradas(2000), main="2000")
+barplot(enetiradas(10000), main="10000")
+par(mfrow=c(1,1))
+
