@@ -1,109 +1,154 @@
+## Unidad 3
 ``` R
 > # Unidad 3
 
-> file.exists("../descargas/unidad03/Mascotas_2a/ClasificacionProductos_csv.txt")
-[1] TRUE
-> ClasificacionProductos <- read.csv2("../descargas/unidad03/Mascotas_2a/ClasificacionProductos_csv.txt")
-> head(ClasificacionProductos)
-  Id IdProducto   Tipo
-1  1          1   Vets
-2  2          2   Vets
-3  3          3   Vets
-4  4          4   Vets
-5  5          5   Vets
-6  6          6 Jardín
-> tail(ClasificacionProductos)
-   Id IdProducto   Tipo
-5   5          5   Vets
-6   6          6 Jardín
-7   7          7 Jardín
-8   8          8 Jardín
-9   9          9 Pileta
-10 10         10 Pileta
-> names(ClasificacionProductos)
-[1] "Id"         "IdProducto" "Tipo"      
+> # Analisis exploratorio
 
-> ProductosxPagina <- read.csv2("../descargas/unidad03/Mascotas_2a/ProductosxPagina_csv.txt")
-> head(ProductosxPagina)
-  IdPágina IdProducto Tipo
-1        1          9    3
-2        2          8    2
-3        3          2    1
-4        4          9    3
-5        5          7    2
-6        6          7    2
-> tail(ProductosxPagina)
-   IdPágina IdProducto Tipo
-15       15          9    3
-16       16          6    2
-17       17          9    3
-18       18          1    1
-19       19          7    2
-20       20          4    1
-> names(ProductosxPagina)
-[1] "IdPágina"   "IdProducto" "Tipo"      
+> library(datasets)
+> data(iris)
+> str(iris)
+'data.frame':	150 obs. of  5 variables:
+ $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+ $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+ $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+ $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+ $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+> ls(all.names=TRUE)
+[1] ".Random.seed" "iris"         "x"            "x01"          "xm"          
+> names(iris)
+[1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"  "Species"     
+> str(iris[["Species"]])
+ Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+> attributes(iris[["Species"]])
+$levels
+[1] "setosa"     "versicolor" "virginica" 
 
-> Navegacion <- read.csv2("../descargas/unidad03/Mascotas_2a/Navegacion_csv.txt")
-> head(Navegacion)
-  Id IdDueño IdPágina          DT Secuencia Venta Importe
-1  1       1        4 0.230000000         1     0       0
-2  2       2       19 2.810000000        19     0       0
-3  3       2        1 1.030000000      1-19     0       0
-4  4       1        1 5.030000000         1     0       0
-5  5       2        6 5.640000000         6     0       0
-6  6       2       12 0.004689429      12-6     0       0
-> tail(Navegacion)
-             Id IdDueño IdPágina    DT Secuencia Venta Importe
-1048568 1048568    3026       13  7.93   13-14-2     0       0
-1048569 1048569    3026        5  1.85   5-13-14     0       0
-1048570 1048570    3026       18  0.85   18-5-13     0       0
-1048571 1048571    3026       11  0.32   11-18-5     0       0
-1048572 1048572    3026       16 13.73  16-11-18     0       0
-1048573 1048573    3027        2  7.96         2     0       0
-> names(Navegacion)
-[1] "Id"        "IdDueño"   "IdPágina"  "DT"        "Secuencia" "Venta"    
-[7] "Importe"  
+$class
+[1] "factor"
 
-> Duenos <- read.csv2("../descargas/unidad03/Mascotas_2a/Duenos_csv.txt")
-> head(Duenos)
-  Id IdDueño Perros Gatos Total Edad Sexo Ingreso
-1  5       1      1     2     3   60    M  116816
-2  6       3      2    NA     2   76    M   16334
-3  7       4      2    NA     2   43    F   34890
-4  8       5     NA     1     1   36    M   38786
-5  9       6      1    NA     1   63    F   22966
-6 10       7      1    NA     1   74    F    8894
-> tail(Duenos)
-       Id IdDueño Perros Gatos Total Edad Sexo Ingreso
-5660 5664    7994      1    NA     1   61    F   17830
-5661 5665    7996      1     1     2   33    M   29813
-5662 5666    7997     NA     2     2   65    M   12383
-5663 5667    7998      3    NA     3   44    F   58143
-5664 5668    7999     NA     2     2   40    F   38167
-5665 5669      NA   7133  2867 10000   NA           NA
-> names(Duenos)
-[1] "Id"      "IdDueño" "Perros"  "Gatos"   "Total"   "Edad"    "Sexo"   
-[8] "Ingreso"
+> str(attributes(iris[["Species"]])$levels)
+ chr [1:3] "setosa" "versicolor" "virginica"
+> class(attributes(iris[["Species"]])$levels)
+[1] "character"
+> attributes(iris[["Species"]])$levels
+[1] "setosa"     "versicolor" "virginica" 
+> class(iris)
+[1] "data.frame"
+> nrow(iris)
+[1] 150
+> ncol(iris)
+[1] 5
+> names(iris)
+[1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"  "Species"     
+> class(iris[["Sepal.Length"]])
+[1] "numeric"
+> range(iris[["Sepal.Length"]])
+[1] 4.3 7.9
+> table(iris[["Species"]])
 
-> Mascotas <- read.csv2("../descargas/unidad03/Mascotas_2a/Mascotas_csv.txt")
-> head(Mascotas)
-  IdMascota IdDueño IdEspecie IdRaza  Peso  Edad Sexo
-1         1    5627         1     89 11.81  0.01    M
-2         2     398         1     40  7.78 12.64    M
-3         3    1962         1     35  6.75  0.56    F
-4         4    6113         2    170  6.40  7.07    F
-5         5    1802         2    166  5.42  0.14    M
-6         6    4092         1     36 18.82  0.29    M
-> tail(Mascotas)
-      IdMascota IdDueño IdEspecie IdRaza  Peso  Edad Sexo
-9995       9995    4900         1     97 45.68  7.00    F
-9996       9996    3424         1     94 30.22  6.81    F
-9997       9997    6964         2    110  2.64 15.00    F
-9998       9998    3092         1     31  7.59  6.22    M
-9999       9999    4332         1     65 36.65 12.24    M
-10000     10000    1460         2    127  2.13 14.20    M
-> names(Mascotas)
-[1] "IdMascota" "IdDueño"   "IdEspecie" "IdRaza"    "Peso"      "Edad"     
-[7] "Sexo"     
-> 
+    setosa versicolor  virginica 
+        50         50         50 
+> table(iris[["Sepal.Length"]])
+
+4.3 4.4 4.5 4.6 4.7 4.8 4.9   5 5.1 5.2 5.3 5.4 5.5 5.6 5.7 5.8 5.9   6 6.1 6.2 
+  1   3   1   4   2   5   6  10   9   4   1   6   7   6   8   7   3   6   6   4 
+6.3 6.4 6.5 6.6 6.7 6.8 6.9   7 7.1 7.2 7.3 7.4 7.6 7.7 7.9 
+  9   7   5   2   8   3   4   1   1   3   1   1   1   4   1 
+> head(iris)
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa
+> attach(iris)
+The following objects are masked from iris (pos = 3):
+
+    Petal.Length, Petal.Width, Sepal.Length, Sepal.Width, Species
+
+> # Analissi estadistico
+> median(iris[["Sepal.Length"]])
+[1] 5.8
+> median(1:4)
+[1] 2.5
+> median(c(1:4,100,1000))
+[1] 3.5
+> # mean(x, trim = 0, na.rm = FALSE, ...)
+> mean(iris[["Sepal.Length"]])
+[1] 5.843333
+> x <- c(0:10, 50)
+> xm <- mean(x)
+> c(xm, mean(x, trim = 0.10))
+[1] 8.75 5.50
+> # trim va de 0 a 0.5 indica que porcentage se recorta tanto de head como de tail
+> # trim 0.01 en 100 observaciones quita la primera y la última
+> x <- seq(0.1,10,0.1)
+> str(x)
+ num [1:100] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 ...
+> mean(log(x))
+[1] 1.334809
+> x01 <- x[2:99]
+> x01
+ [1] 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0
+[20] 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9
+[39] 4.0 4.1 4.2 4.3 4.4 4.5 4.6 4.7 4.8 4.9 5.0 5.1 5.2 5.3 5.4 5.5 5.6 5.7 5.8
+[58] 5.9 6.0 6.1 6.2 6.3 6.4 6.5 6.6 6.7 6.8 6.9 7.0 7.1 7.2 7.3 7.4 7.5 7.6 7.7
+[77] 7.8 7.9 8.0 8.1 8.2 8.3 8.4 8.5 8.6 8.7 8.8 8.9 9.0 9.1 9.2 9.3 9.4 9.5 9.6
+[96] 9.7 9.8 9.9
+> mean(log(x01))
+[1] 1.36205
+> mean(log(x), trim = 0.01)
+[1] 1.36205
+> # trim 0.1 en 100 observaciones quita las 10 primeras y las 10 últimas
+> x10 <- x[11:90]
+> x10
+ [1] 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9
+[20] 3.0 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 4.4 4.5 4.6 4.7 4.8
+[39] 4.9 5.0 5.1 5.2 5.3 5.4 5.5 5.6 5.7 5.8 5.9 6.0 6.1 6.2 6.3 6.4 6.5 6.6 6.7
+[58] 6.8 6.9 7.0 7.1 7.2 7.3 7.4 7.5 7.6 7.7 7.8 7.9 8.0 8.1 8.2 8.3 8.4 8.5 8.6
+[77] 8.7 8.8 8.9 9.0
+> mean(log(x10))
+[1] 1.485518
+> mean(log(x), trim = 0.1)
+[1] 1.485518
+> # sd
+> sd(iris[["Sepal.Length"]])
+[1] 0.8280661
+> sd(1:2) ^ 2
+[1] 0.5
+> summary(iris)
+  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+ Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+ Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+       Species  
+ setosa    :50  
+ versicolor:50  
+ virginica :50  
+                
+                
 ```
+                
+> hist(iris$Sepal.Length,breaks=20)
+ 
+<img src="./graficos/graph5.png" />
+
+> qqnorm(iris$Sepal.Length)
+
+<img src="./graficos/graph6.png" />
+
+> boxplot(Petal.Length ~ Species , data = iris, ylab="Petal.Length", varwith=TRUE)
+
+<img src="./graficos/graph7.png" />
+
+> plot(Petal.Length ~ Sepal.Length, data = iris, col = "red")
+
+<img src="./graficos/graph8.png" />
+
+> pairs(iris)
+
+<img src="./graficos/graph9.png" />

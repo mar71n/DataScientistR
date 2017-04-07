@@ -36,11 +36,15 @@ median(iris[["Sepal.Length"]])
 median(1:4)
 median(c(1:4,100,1000))
 
+# mean(x, trim = 0, na.rm = FALSE, ...)
 mean(iris[["Sepal.Length"]])
 ?mean
 x <- c(0:10, 50)
 xm <- mean(x)
 c(xm, mean(x, trim = 0.10))
+
+# trim va de 0 a 0.5 indica que porcentage se recorta tanto de head como de tail
+# trim 0.01 en 100 observaciones quita la primera y la última
 x <- seq(0.1,10,0.1)
 str(x)
 mean(log(x))
@@ -48,11 +52,13 @@ x01 <- x[2:99]
 x01
 mean(log(x01))
 mean(log(x), trim = 0.01)
+# trim 0.1 en 100 observaciones quita las 10 primeras y las 10 últimas
 x10 <- x[11:90]
 x10
 mean(log(x10))
 mean(log(x), trim = 0.1)
 
+# sd
 sd(iris[["Sepal.Length"]])
 ?sd
 sd(1:2) ^ 2
@@ -79,7 +85,7 @@ plot(function(x) pnorm(x, log.p = TRUE), -50, 10, main = "log { Normal Cumulativ
 plot(function(x) dnorm(x, mean=50, sd=30), -50, 150, main = "dnorm")
 plot(function(x) pnorm(x, mean=50, sd=30), -50, 150, main = "pnorm")
 
-# IntroducciÃ³n a la regresiÃ³n lineÃ¡l
+# Introduccion a la regresion lineal
 
 install.packages("UsingR")
 library(UsingR)
@@ -97,6 +103,7 @@ plot(diamond$carat, diamond$price, xlab = "carats", ylab = "price",
                                    cex = 1.1, pch = 21, frame = FALSE)
 abline(lm(price ~ carat, data = diamond),lwd=2)
 
+# el operador I 
 ?I
 class(diamond$carat)
 class(I(diamond$carat - mean(diamond$carat)))
