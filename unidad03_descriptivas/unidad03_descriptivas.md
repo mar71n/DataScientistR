@@ -162,3 +162,204 @@ The following objects are masked from iris (pos = 3):
 ```
 
 <img src="./graficos/graph9.png" width="30%" />
+
+``` R
+> # Distribuciones
+> pnorm(27.4, mean=50, sd=20)
+[1] 0.1292381
+
+> plot(function(x) pnorm(x, log.p = TRUE), -50, 10, main = "log { Normal Cumulative }")
+```
+<img src="./graficos/graph10.png" width="30%" />
+
+```
+> plot(function(x) dnorm(x, mean=50, sd=30), -50, 150, main = "dnorm")
+```
+<img src="./graficos/graph11.png" width="30%" />
+
+```
+> plot(function(x) pnorm(x, mean=50, sd=30), -50, 150, main = "pnorm")
+```
+<img src="./graficos/graph12.png" width="30%" />
+
+``` R
+> # Introduccion a la regresion lineal
+> # install.packages("UsingR")
+> library(UsingR)
+Loading required package: MASS
+Loading required package: HistData
+Loading required package: Hmisc
+Loading required package: lattice
+Loading required package: survival
+Loading required package: Formula
+Loading required package: ggplot2
+
+Attaching package: 'Hmisc'
+
+The following objects are masked from 'package:base':
+
+    format.pval, round.POSIXt, trunc.POSIXt, units
+
+
+Attaching package: 'UsingR'
+
+The following object is masked from 'package:survival':
+
+    cancer
+
+Warning messages:
+1: package 'UsingR' was built under R version 3.2.5 
+2: package 'HistData' was built under R version 3.2.5 
+3: package 'Hmisc' was built under R version 3.2.5 
+4: package 'survival' was built under R version 3.2.5 
+5: package 'Formula' was built under R version 3.2.5 
+6: package 'ggplot2' was built under R version 3.2.5 
+> data(diamond)
+> head(diamond)
+  carat price
+1  0.17   355
+2  0.16   328
+3  0.17   350
+4  0.18   325
+5  0.25   642
+6  0.16   342
+> summary(diamond)
+     carat            price       
+ Min.   :0.1200   Min.   : 223.0  
+ 1st Qu.:0.1600   1st Qu.: 337.5  
+ Median :0.1800   Median : 428.5  
+ Mean   :0.2042   Mean   : 500.1  
+ 3rd Qu.:0.2500   3rd Qu.: 657.0  
+ Max.   :0.3500   Max.   :1086.0  
+> plot(diamond$carat, diamond$price, xlab = "carats", ylab = "price", 
++                                    bg = "lightblue", col = "black",
++                                    cex = 1.1, pch = 21, frame = FALSE)
+```
+<img src="./graficos/graph13.png" width="30%" />
+
+``` R
+> lm(price ~ carat, data = diamond)
+
+Call:
+lm(formula = price ~ carat, data = diamond)
+
+Coefficients:
+(Intercept)        carat  
+     -259.6       3721.0  
+
+> plot(diamond$carat, diamond$price, xlab = "carats", ylab = "price", 
++                                    bg = "lightblue", col = "black",
++                                    cex = 1.1, pch = 21, frame = FALSE)
+> abline(lm(price ~ carat, data = diamond),lwd=2)
+```
+<img src="./graficos/graph14.png" width="30%" />
+
+``` R
+> # el operador I 
+> ?I
+> class(diamond$carat)
+[1] "numeric"
+> class(I(diamond$carat - mean(diamond$carat)))
+[1] "AsIs"
+> class(diamond$carat - mean(diamond$carat))
+[1] "numeric"
+> fit2 <- lm(price ~ I(carat - mean(carat)), data = diamond)
+> coef(fit2)
+           (Intercept) I(carat - mean(carat)) 
+              500.0833              3721.0249 
+> x <- diamond$carat - mean(diamond$carat)
+> fit2 <- lm(price ~ x, data = diamond)
+> coef(fit2)
+(Intercept)           x 
+   500.0833   3721.0249 
+> fit <- lm(price ~ carat, data = diamond)
+> coef(fit)
+(Intercept)       carat 
+  -259.6259   3721.0249 
+> newx <- c(0.16, 0.27, 0.34)
+> coef(fit)[1] + coef(fit)[2] * newx
+[1]  335.7381  745.0508 1005.5225
+> predict(fit, newdata = data.frame(carat=newx))
+        1         2         3 
+ 335.7381  745.0508 1005.5225 
+> str(fit)
+List of 12
+ $ coefficients : Named num [1:2] -260 3721
+  ..- attr(*, "names")= chr [1:2] "(Intercept)" "carat"
+ $ residuals    : Named num [1:48] -17.95 -7.74 -22.95 -85.16 -28.63 ...
+  ..- attr(*, "names")= chr [1:48] "1" "2" "3" "4" ...
+ $ effects      : Named num [1:48] -3464.7 1448.7 -20.3 -82.6 -27 ...
+  ..- attr(*, "names")= chr [1:48] "(Intercept)" "carat" "" "" ...
+ $ rank         : int 2
+ $ fitted.values: Named num [1:48] 373 336 373 410 671 ...
+  ..- attr(*, "names")= chr [1:48] "1" "2" "3" "4" ...
+ $ assign       : int [1:2] 0 1
+ $ qr           :List of 5
+  ..$ qr   : num [1:48, 1:2] -6.928 0.144 0.144 0.144 0.144 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:48] "1" "2" "3" "4" ...
+  .. .. ..$ : chr [1:2] "(Intercept)" "carat"
+  .. ..- attr(*, "assign")= int [1:2] 0 1
+  ..$ qraux: num [1:2] 1.14 1.1
+  ..$ pivot: int [1:2] 1 2
+  ..$ tol  : num 1e-07
+  ..$ rank : int 2
+  ..- attr(*, "class")= chr "qr"
+ $ df.residual  : int 46
+ $ xlevels      : Named list()
+ $ call         : language lm(formula = price ~ carat, data = diamond)
+ $ terms        :Classes 'terms', 'formula' length 3 price ~ carat
+  .. ..- attr(*, "variables")= language list(price, carat)
+  .. ..- attr(*, "factors")= int [1:2, 1] 0 1
+  .. .. ..- attr(*, "dimnames")=List of 2
+  .. .. .. ..$ : chr [1:2] "price" "carat"
+  .. .. .. ..$ : chr "carat"
+  .. ..- attr(*, "term.labels")= chr "carat"
+  .. ..- attr(*, "order")= int 1
+  .. ..- attr(*, "intercept")= int 1
+  .. ..- attr(*, "response")= int 1
+  .. ..- attr(*, ".Environment")=<environment: R_GlobalEnv> 
+  .. ..- attr(*, "predvars")= language list(price, carat)
+  .. ..- attr(*, "dataClasses")= Named chr [1:2] "numeric" "numeric"
+  .. .. ..- attr(*, "names")= chr [1:2] "price" "carat"
+ $ model        :'data.frame':	48 obs. of  2 variables:
+  ..$ price: int [1:48] 355 328 350 325 642 342 322 485 483 323 ...
+  ..$ carat: num [1:48] 0.17 0.16 0.17 0.18 0.25 0.16 0.15 0.19 0.21 0.15 ...
+  ..- attr(*, "terms")=Classes 'terms', 'formula' length 3 price ~ carat
+  .. .. ..- attr(*, "variables")= language list(price, carat)
+  .. .. ..- attr(*, "factors")= int [1:2, 1] 0 1
+  .. .. .. ..- attr(*, "dimnames")=List of 2
+  .. .. .. .. ..$ : chr [1:2] "price" "carat"
+  .. .. .. .. ..$ : chr "carat"
+  .. .. ..- attr(*, "term.labels")= chr "carat"
+  .. .. ..- attr(*, "order")= int 1
+  .. .. ..- attr(*, "intercept")= int 1
+  .. .. ..- attr(*, "response")= int 1
+  .. .. ..- attr(*, ".Environment")=<environment: R_GlobalEnv> 
+  .. .. ..- attr(*, "predvars")= language list(price, carat)
+  .. .. ..- attr(*, "dataClasses")= Named chr [1:2] "numeric" "numeric"
+  .. .. .. ..- attr(*, "names")= chr [1:2] "price" "carat"
+ - attr(*, "class")= chr "lm"
+> 
+```
+
+``` R
+> # Introduccion a clustering
+> newiris <- iris
+> newiris$Species <- NULL
+> head(newiris)
+  Sepal.Length Sepal.Width Petal.Length Petal.Width
+1          5.1         3.5          1.4         0.2
+2          4.9         3.0          1.4         0.2
+3          4.7         3.2          1.3         0.2
+4          4.6         3.1          1.5         0.2
+5          5.0         3.6          1.4         0.2
+6          5.4         3.9          1.7         0.4
+> kc <- kmeans(newiris, 3)
+> class(kc)
+[1] "kmeans"
+> plot(newiris[c("Sepal.Length", "Sepal.Width")], col=kc$cluster)
+> points(kc$centers[,c("Sepal.Length", "Sepal.Width")], col=1:3, pch=8, cex=2)
+> 
+```
+<img src="./graficos/graph15.png" width="50%" />

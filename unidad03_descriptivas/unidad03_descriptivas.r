@@ -87,7 +87,7 @@ plot(function(x) pnorm(x, mean=50, sd=30), -50, 150, main = "pnorm")
 
 # Introduccion a la regresion lineal
 
-install.packages("UsingR")
+# install.packages("UsingR")
 library(UsingR)
 
 data(diamond)
@@ -126,7 +126,7 @@ predict(fit, newdata = data.frame(carat=newx))
 
 str(fit)
 
-# Introducción a clustering
+# Introduccion a clustering
 
 newiris <- iris
 newiris$Species <- NULL
