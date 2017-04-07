@@ -10,6 +10,7 @@ x
 tx <- table(x)
 tx
 plot(table(x),type="h")
+barplot(tx, main="40 tiradas")
 
 p <- function(x){x/tx[x]}
 p(5)
@@ -20,27 +21,28 @@ p1 <- function(k){
   tx[1]/k
 }
 
-?lapply
+?vapply
 p1(30)
 res <- vapply(list(10,20,30,40,80,160,1000,2000,10000),p1,c(1))
 names(res) <- c(10,20,30,40,80,160,1000,2000,10000)
 plot(res,type="h")
-
+barplot(res, main="P(1) para x tiradas")  
 
 # Ejercicio 1.2.2
 
 sample(c(0,1),20,replace=TRUE,prob=c(0.5,0.5))
 k <- 100
-p1 <- function(k){
+moneda_p1 <- function(k){
   x <- sample(c(0,1),k,replace=TRUE,prob=c(0.5,0.5))
   tx <- table(x)
   tx[1]/k
 }
 
-p1(30)
-res <- vapply(list(10,20,30,40,80,160,1000,2000,10000),p1,c(1))
+moneda_p1(30)
+res <- vapply(list(10,20,30,40,80,160,1000,2000,10000),moneda_p1,c(1))
 names(res) <- c(10,20,30,40,80,160,1000,2000,10000)
 plot(res,type="h")
+barplot(res, main="P(cara) en x tiradas")
 
 ## Promedio
 
@@ -63,7 +65,7 @@ names(promedios) <- c(10,20,30,40,80,160,1000,2000,10000)
 promedios
 
 plot(promedios, type="h")
-barplot(promedios, col=c("lightblue1","lightblue2"))
+barplot(promedios, col=c("lightblue1","lightblue2"), main="Promedio resultado dados\n en x tiradas")
 
 # Ejercicio 1.2.6
 
@@ -85,7 +87,7 @@ desvios <- vapply(list(10,20,30,40,80,160,1000,2000,10000),desviostd,c(1))
 names(desvios) <- c(10,20,30,40,80,160,1000,2000,10000)
 desvios
 
-barplot(desvios, ylim=c(0,2))
+barplot(desvios, ylim=c(0,2), main="desvio estandar\n para x tiradas")
 
 # Ejercicio 1.2.7
 
