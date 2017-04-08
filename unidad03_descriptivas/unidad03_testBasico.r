@@ -89,6 +89,8 @@ desvios
 
 barplot(desvios, ylim=c(0,2), main="desvio estandar\n para x tiradas")
 
+## Distribuciones
+
 # Ejercicio 1.2.7
 
 k <- 10
@@ -136,5 +138,53 @@ hist(iris[iris$Species=="setosa",]$Petal.Length,breaks=seq(0.5,2.5,0.05), main="
 plot(function(x) dnorm(x, mean=1.462, sd=0.173664), 0.5, 2.5, main = "dnorm(x, mean=1.462, sd=0.173664)",ylab="")
 par(mfrow=c(1,1))
 
+## Inferencia estadistica
 
+sample(c(0,1),10,replace=TRUE,prob=c(0.75,0.25))
+# [1] 1 1 0 1 1 1 1 0 0 0
+# que probabilidad hay de este resultado si la moneda esta equilibrada
+dbinom(6,10,0.5)
+dbinom(4,10,0.5)
 
+#  [1] 1 0 1 1 0 0 0 0 0 0
+dbinom(3,10,0.5)
+
+# [1] 0 0 0 0 0 0 0 0 1 0
+dbinom(1,10,0.5)
+
+x <- sample(c(0,1),20,replace=TRUE,prob=c(0.75,0.25))
+tx <- table(x)
+dbinom(tx[1],20,0.5)
+
+x <- sample(c(0,1),100,replace=TRUE,prob=c(0.75,0.25))
+tx <- table(x)
+dbinom(tx[1],100,0.5)
+
+# probabilidad de x si H0 en n tiradas
+moneda <- function(n){
+  x <- sample(c(0,1),n,replace=TRUE,prob=c(0.75,0.25))
+  tx <- table(x)
+  dbinom(tx[1],n,0.5) * 100
+}
+
+# veces que acepto H0 (sindo H1 por def de la funcion) con 95% de nivel de confianza
+# en 20 rondas de 10 tiradas
+res <- vapply(rep(10,20),moneda,c(1))
+length(res[which(res > 5)])
+# en 20 rondas de 20 tiradas
+res <- vapply(rep(20,20),moneda,c(1))
+length(res[which(res > 5)])
+# en 20 rondas de 100 tiradas
+res <- vapply(rep(100,20),moneda,c(1))
+length(res[which(res > 5)])
+
+dbinom(1,1,0.5)
+dbinom(2,2,0.5)
+dbinom(3,3,0.5)
+dbinom(2,3,0.5)
+dbinom(1,3,0.5)
+
+dbinom(2,5,.15)
+dbinom(3,5,.15)
+dbinom(4,5,.15)
+dbinom(5,5,.15)

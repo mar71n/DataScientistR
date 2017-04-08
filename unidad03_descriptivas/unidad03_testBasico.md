@@ -163,3 +163,51 @@ En lugar del ejemplo del transito tomo datos de iris
 ```
 <img src="./graficos/graph1.png" width="60%" />
 
+## Inferencia estadistica
+``` R
+ ## Inferencia estadistica
+> sample(c(0,1),10,replace=TRUE,prob=c(0.75,0.25))
+ [1] 0 0 0 0 1 0 0 0 0 0
+> # [1] 1 1 0 1 1 1 1 0 0 0
+> # que probabilidad hay de este resultado si la moneda esta equilibrada
+> dbinom(6,10,0.5)
+[1] 0.2050781
+> dbinom(4,10,0.5)
+[1] 0.2050781
+> #  [1] 1 0 1 1 0 0 0 0 0 0
+> dbinom(3,10,0.5)
+[1] 0.1171875
+> # [1] 0 0 0 0 0 0 0 0 1 0
+> dbinom(1,10,0.5)
+[1] 0.009765625
+> x <- sample(c(0,1),20,replace=TRUE,prob=c(0.75,0.25))
+> tx <- table(x)
+> dbinom(tx[1],20,0.5)
+         0 
+0.07392883 
+> x <- sample(c(0,1),100,replace=TRUE,prob=c(0.75,0.25))
+> tx <- table(x)
+> dbinom(tx[1],100,0.5)
+           0 
+5.518672e-07 
+> # probabilidad de x si H0 en n tiradas
+> moneda <- function(n){
++   x <- sample(c(0,1),n,replace=TRUE,prob=c(0.75,0.25))
++   tx <- table(x)
++   dbinom(tx[1],n,0.5) * 100
++ }
+> # veces que acepto H0 (siendo H1 por def de la funcion) con 95% de nivel de confianza
+> # en 20 rondas de 10 tiradas
+> res <- vapply(rep(10,20),moneda,c(1))
+> length(res[which(res > 5)])
+[1] 8
+> # en 20 rondas de 20 tiradas
+> res <- vapply(rep(20,20),moneda,c(1))
+> length(res[which(res > 5)])
+[1] 5
+> # en 20 rondas de 100 tiradas
+> res <- vapply(rep(100,20),moneda,c(1))
+> length(res[which(res > 5)])
+[1] 0
+> 
+```
