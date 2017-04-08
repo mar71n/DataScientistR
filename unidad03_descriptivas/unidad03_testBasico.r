@@ -125,3 +125,16 @@ hist(iris$Petal.Length)
 hist(iris[iris$Species=="setosa",]$Petal.Length,breaks=seq(0,3,0.05))
 hist(iris$Petal.Length,breaks=seq(0,8,0.7))
 hist(iris$Petal.Length,breaks=seq(0,8,0.1))
+
+# ajusto Petal.Length para la Specie Setosa con dnorm
+# le paso a dnorm los parametros mean y sd de los datos
+mean(iris[iris$Species=="setosa","Petal.Length"])
+sd(iris[iris$Species=="setosa","Petal.Length"])
+# dnorm(x, mean=1.462, sd=0.173664)
+par(mfrow=c(2,1))
+hist(iris[iris$Species=="setosa",]$Petal.Length,breaks=seq(0.5,2.5,0.05), main="setosa Petal.Length\n mean=1.462 sd=0.173664")
+plot(function(x) dnorm(x, mean=1.462, sd=0.173664), 0.5, 2.5, main = "dnorm(x, mean=1.462, sd=0.173664)",ylab="")
+par(mfrow=c(1,1))
+
+
+

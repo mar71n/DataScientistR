@@ -1,4 +1,5 @@
 ## Unidad 3
+# Apunte sobre test Basico
 
 ``` R
 > ## Test Basico
@@ -144,3 +145,21 @@ x
 > 
 ```
 <img src="./graficos/graph22.png" width="50%" />
+
+En lugar del ejemplo del transito tomo datos de iris
+``` R
+> # ajusto Petal.Length para la Specie Setosa con dnorm
+> # le paso a dnorm los parametros mean y sd de los datos
+> mean(iris[iris$Species=="setosa","Petal.Length"])
+[1] 1.462
+> sd(iris[iris$Species=="setosa","Petal.Length"])
+[1] 0.173664
+> # dnorm(x, mean=1.462, sd=0.173664)
+> par(mfrow=c(2,1))
+> hist(iris[iris$Species=="setosa",]$Petal.Length,breaks=seq(0.5,2.5,0.05), main="setosa Petal.Length\n mean=1.462 sd=0.173664")
+> plot(function(x) dnorm(x, mean=1.462, sd=0.173664), 0.5, 2.5, main = "dnorm(x, mean=1.462, sd=0.173664)",ylab="")
+> par(mfrow=c(1,1))
+>
+```
+<img src="./graficos/graph1.png" width="60%" />
+
