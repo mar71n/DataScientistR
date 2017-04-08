@@ -14,9 +14,9 @@
  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 > ls(all.names=TRUE)
-[1] ".Random.seed" "iris"         "x"            "x01"          "xm"          
+[1] ".Random.seed" "iris"         "x"            "x01"          "xm"
 > names(iris)
-[1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"  "Species"     
+[1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"  "Species"
 > str(iris[["Species"]])
  Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 > attributes(iris[["Species"]])
@@ -39,7 +39,7 @@ $class
 > ncol(iris)
 [1] 5
 > names(iris)
-[1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"  "Species"     
+[1] "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"  "Species"
 > class(iris[["Sepal.Length"]])
 [1] "numeric"
 > range(iris[["Sepal.Length"]])
@@ -181,6 +181,13 @@ The following objects are masked from iris (pos = 3):
 > plot(function(x) pnorm(x, mean=50, sd=30), -50, 150, main = "pnorm")
 ```
 <img src="./graficos/graph12.png" width="30%" />
+
+```
+plot(function(x) dnorm(x, mean=50, sd=30), -50, 150, main = "dnorm")
+lines(c(27.4, 0))
+```
+<img src="./graficos/graph0.png" width="30%" />
+
 
 ``` R
 > # Introduccion a la regresion lineal

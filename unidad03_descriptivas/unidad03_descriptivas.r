@@ -22,6 +22,29 @@ names(iris)
 
 class(iris[["Sepal.Length"]])
 range(iris[["Sepal.Length"]])
+length(iris[["Sepal.Length"]])
+
+nlevels(iris[,"Species"])
+nlevels(iris$Species)
+levels(iris$Species)
+
+# los levels se muestran aunque no existan casos?
+# puede haber levels para los que existan casos
+# Create a factor with an extra level (gamma)
+x <- factor(c("alpha","beta","alpha"), levels=c("alpha","beta","gamma"))
+x
+#> [1] alpha beta  alpha
+#> Levels: alpha beta gamma
+table(x)
+# alpha  beta gamma
+#     2     1     0
+nlevels(x)
+# [1] 3
+# Remove the extra level
+x <- factor(x)
+x
+#> [1] alpha beta  alpha
+#> Levels: alpha beta
 
 table(iris[["Species"]])
 table(iris[["Sepal.Length"]])
@@ -66,6 +89,8 @@ sd(1:2) ^ 2
 summary(iris)
 
 hist(iris$Sepal.Length,breaks=20)
+hist(iris$Sepal.Length,breaks=10)
+hist(iris$Sepal.Length,breaks=30)
 
 qqnorm(iris$Sepal.Length)
 
@@ -78,12 +103,17 @@ pairs(iris)
 # Distribuciones
 
 pnorm(27.4, mean=50, sd=20)
+pnorm(50, mean=50, sd=20)
+# [1] 0.5
 
 ?pnorm
 
 plot(function(x) pnorm(x, log.p = TRUE), -50, 10, main = "log { Normal Cumulative }")
 plot(function(x) dnorm(x, mean=50, sd=30), -50, 150, main = "dnorm")
 plot(function(x) pnorm(x, mean=50, sd=30), -50, 150, main = "pnorm")
+
+plot(function(x) dnorm(x, mean=50, sd=30), -50, 150, main = "dnorm")
+lines(c(27.4, 0))
 
 # Introduccion a la regresion lineal
 
