@@ -15,6 +15,7 @@ barplot(tx, main="40 tiradas")
 p <- function(x){x/tx[x]}
 p(5)
 
+# P(1) en k tiradas
 p1 <- function(k){
   x <- sample(1:6,k,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
   tx <- table(x)
@@ -54,6 +55,7 @@ sum(x)
 length(x)
 mean(x)
 
+# promedio de los resultados al tirar k veces el dado
 promedio <- function(k){
   x <- sample(1:6,k,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
   mean(x)
@@ -226,3 +228,64 @@ par(new=TRUE)
 plot(function(x) pbinom(x,100, 0.15),0,100, col="red",yaxt="n",ylim = c(0, 1.2),ylab="")
 axis(2)
 text(40,1.1,labels="pbinom",col="red")
+
+# Ejercicio 1.2.8
+
+x <- sample(1:6,1000,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+table(x)
+sum(table(x))
+
+# serie que se nos entrega
+serie <- c(rep(1,170),rep(2,235), rep(3,163),rep(4,105),rep(5,168),rep(6,159))
+tserie <- table(serie)
+tserie
+sum(table(serie))
+pserie <- tserie / 1000
+pserie
+1000/6
+166/1000
+
+serie_teorica <- c(rep(1,167),rep(2,167),rep(3,167),rep(4,167),rep(5,166),rep(6,166))
+tserie_teorica <- table(serie_teorica)
+pserie_teorica <- tserie_teorica / 1000
+pserie_teorica
+abs(pserie - pserie_teorica)
+
+# en el ejercico 1.2.1 vimos que P(n) se acercaba a un poco mas de 1.6 al aumentar las tiradas
+# calculo una serie suponiendo P(n) = 1/6 para todas las caras del dado
+serie_aleatoria <- sample(1:6,1000,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+tserie_aleatoria <- table(serie_aleatoria)
+tserie_aleatoria
+pserie_aleatoria <- tserie_aleatoria / 1000
+pserie_aleatoria
+abs(pserie - pserie_aleatoria)
+
+# --------------------------------------------------------------------
+sample(1:6,1,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+sample(1:6,2,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+sample(1:6,3,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+
+
+# p(1) = 1/6
+# p(no 1) = 1 - 1/6
+
+# un solo 1 en dos tiradas
+(1/6) * (5/6)
+com <- expand.grid(c(1:6),c(1:6))
+length(com$Var1)
+solo1 <- com[com$Var1==1 & com$Var2!=1,]
+length(solo1$Var1)
+5/36
+
+# al menos un 1 en dos tiradas
+(1/6) * (5/6) + (5/6) * (1/6) + (1/6) * (1/6)
+com <- expand.grid(c(1:6),c(1:6))
+length(com$Var1)
+solo1 <- com[com$Var1==1 | com$Var2==1,]
+length(solo1$Var1)
+11/36
+
+# probabilidad de obtener 3 veces AS al arrojar 4 veces un dado equilibrado
+c_4_3 <- factorial(4) / factorial(3) * factorial(1)
+c_4_3 * ((1/6) ^ 3) * (5/6)
+5/324

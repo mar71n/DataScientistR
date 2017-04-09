@@ -289,3 +289,60 @@ Volviendo al tema del sobrepeso
 ```
 <img src="./graficos/graph2.png" width="60%" />
 
+``` R
+> # Ejercicio 1.2.8
+> x <- sample(1:6,1000,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+> table(x)
+x
+  1   2   3   4   5   6
+168 146 155 195 159 177
+> sum(table(x))
+[1] 1000
+> # serie que se nos entrega
+> serie <- c(rep(1,170),rep(2,235), rep(3,163),rep(4,105),rep(5,168),rep(6,159))
+> tserie <- table(serie)
+> tserie
+serie
+  1   2   3   4   5   6
+170 235 163 105 168 159
+> sum(table(serie))
+[1] 1000
+> pserie <- tserie / 1000
+> pserie
+serie
+    1     2     3     4     5     6
+0.170 0.235 0.163 0.105 0.168 0.159
+> 1000/6
+[1] 166.6667
+> 166/1000
+[1] 0.166
+> serie_teorica <- c(rep(1,167),rep(2,167),rep(3,167),rep(4,167),rep(5,166),rep(6,166))
+> tserie_teorica <- table(serie_teorica)
+> pserie_teorica <- tserie_teorica / 1000
+> pserie_teorica
+serie_teorica
+    1     2     3     4     5     6
+0.167 0.167 0.167 0.167 0.166 0.166
+> abs(pserie - pserie_teorica)
+serie
+    1     2     3     4     5     6
+0.003 0.068 0.004 0.062 0.002 0.007
+> # en el ejercico 1.2.1 vimos que P(n) se acercaba a un poco mas de 1.6 al aumentar las tiradas
+> # calculo una serie suponiendo P(n) = 1/6 para todas las caras del dado
+> serie_aleatoria <- sample(1:6,1000,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+> tserie_aleatoria <- table(serie_aleatoria)
+> tserie_aleatoria
+serie_aleatoria
+  1   2   3   4   5   6
+166 159 176 174 164 161
+> pserie_aleatoria <- tserie_aleatoria / 1000
+> pserie_aleatoria
+serie_aleatoria
+    1     2     3     4     5     6
+0.166 0.159 0.176 0.174 0.164 0.161
+> abs(pserie - pserie_aleatoria)
+serie
+    1     2     3     4     5     6
+0.004 0.076 0.013 0.069 0.004 0.002
+>
+```
