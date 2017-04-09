@@ -210,4 +210,82 @@ En lugar del ejemplo del transito tomo datos de iris
 > length(res[which(res > 5)])
 [1] 0
 > 
+> dbinom(1,1,0.5)
+[1] 0.5
+> dbinom(2,2,0.5)
+[1] 0.25
+> dbinom(3,3,0.5)
+[1] 0.125
+> dbinom(2,3,0.5)
+[1] 0.375
+> dbinom(1,3,0.5)
+[1] 0.375
+> 
 ```
+
+``` R
+> # Nos dicen que el 15% de la poblacion mundial tiene sobrepeso.
+> # queremos saber si en Bs. As es la misma tasa
+> # Tomamos una muestra aleatoria de 5 habitantes y encontramos 2 con sobrepeso.
+> # H0 : Bs As tiene la misma tasa mundial, 15%
+> # probabilidad de q ninguno tenga sobrepeso, siendo H0
+> dbinom(0,1,0.15)
+[1] 0.85
+> dbinom(0,2,0.15)
+[1] 0.7225
+> dbinom(0,3,0.15)
+[1] 0.614125
+> dbinom(0,4,0.15)
+[1] 0.5220062
+> dbinom(0,5,0.15)
+[1] 0.4437053
+> dbinom(0,1,0.15) ^ 5
+[1] 0.4437053
+> # P(2 con sobrepeos y 3 sin)
+> dbinom(2,5,.15)
+[1] 0.1381781
+> # P(3 con sobrepeos y 2 sin)
+> dbinom(3,5,.15)
+[1] 0.02438438
+> # P(4 con sobrepeos y 1 sin)
+> dbinom(4,5,.15)
+[1] 0.002151562
+> # P(5 con sobrepeos y 0 sin)
+> dbinom(5,5,.15)
+[1] 7.59375e-05
+> # Si Bs As tuviera la misma tasa q la mundial, la prob de encontrar 2 con sobre peso en 5 es
+> # P(2 con sobrepeos y 3 sin)
+> dbinom(2,5,.15)
+[1] 0.1381781
+> # no esta entre 5% sup ni el 5% if, ie. no hay motivo para rechazar H0
+> 
+```
+
+Quiero ver como superponer los grafico
+
+https://github.com/jumanbar/Curso-R/blob/master/lecciones/graficos.R
+
+http://www.um.es/ae/FEIR/60/
+``` R
+> #En el siguiente código se grafica el seno y el coseno en el intervalo [-2\pi , 2\pi] 
+> plot(sin,-2*pi, 2*pi, col="red" , xlab="", ylab="")
+> par(new=TRUE)
+> plot(cos, -2*pi, 2*pi, col="blue" , xlab="", ylab="",  axes=FALSE) 
+> title(main="Gráficas del seno y coseno")
+> abline(a=0, b=0)
+```
+<img src="./graficos/graph3.png" width="30%" />
+
+Volviendo al tema del sobrepeso
+``` R
+> plot(function(x) dbinom(x,100, 0.15),0,100, col="blue",yaxt="n",ylim = c(0, 0.12),ylab="")
+> axis(4)
+> text(80,0.02,labels="dnorm",col="blue")
+> par(new=TRUE)
+> plot(function(x) pbinom(x,100, 0.15),0,100, col="red",yaxt="n",ylim = c(0, 1.2),ylab="")
+> axis(2)
+> text(40,1.1,labels="pnorm",col="red")
+> 
+```
+<img src="./graficos/graph2.png" width="60%" />
+
