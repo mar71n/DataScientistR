@@ -280,11 +280,11 @@ Volviendo al tema del sobrepeso
 ``` R
 > plot(function(x) dbinom(x,100, 0.15),0,100, col="blue",yaxt="n",ylim = c(0, 0.12),ylab="")
 > axis(4)
-> text(80,0.02,labels="dnorm",col="blue")
+> text(80,0.02,labels="dbinom",col="blue")
 > par(new=TRUE)
 > plot(function(x) pbinom(x,100, 0.15),0,100, col="red",yaxt="n",ylim = c(0, 1.2),ylab="")
 > axis(2)
-> text(40,1.1,labels="pnorm",col="red")
+> text(40,1.1,labels="pbinom",col="red")
 > 
 ```
 <img src="./graficos/graph2.png" width="60%" />
