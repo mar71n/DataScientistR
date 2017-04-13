@@ -14,3 +14,10 @@ odbcGetInfo(con)
 sqlTables(con)
 
 odbcCloseAll()
+
+install.packages("gdata")
+library("gdata")
+
+file.exists("../descargas/unidad03/Mascotas2.xlsx")
+con <- read.xls("../descargas/unidad03/Mascotas2.xlsx")
+head(con)
