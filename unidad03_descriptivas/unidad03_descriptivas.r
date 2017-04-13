@@ -166,3 +166,62 @@ kc <- kmeans(newiris, 3)
 class(kc)
 plot(newiris[c("Sepal.Length", "Sepal.Width")], col=kc$cluster)
 points(kc$centers[,c("Sepal.Length", "Sepal.Width")], col=1:3, pch=8, cex=2)
+
+## Clase interactiva
+
+h <- read.csv2("../descargas/unidad03/Mascotas_2a/Mascotas_csv.txt")
+head(h)
+median(h$Peso)
+mean(h$Peso)
+summary(h$Peso)
+
+hist(h$Peso,30)
+tama <- length(h$Peso)
+# regla raiz cuadrada
+ndiv <- sqrt(tama)
+hist(h$Peso,ndiv)
+# regla de Sturges
+ndivS <- 1 + log2(tama)
+hist(h$Peso,ndivS)
+
+qqnorm(h$Peso)
+
+qqnorm(h$IdDueno)
+
+boxplot(h$Peso ~ h$IdEspecie)
+
+# importe ~ ingreso
+h2 <- read.csv2("../descargas/unidad03/Mascotas_2a/Duenos_csv.txt")
+h3 <- read.csv2("../descargas/unidad03/Mascotas_2a/Navegacion_csv.txt")
+names(h)
+names(h2)
+names(h3)
+
+?merge
+h3_con_venta <- h3[h3$Importe >0, ]
+nrow(h3_con_venta)
+datosdw <- merge(h3_con_venta, h2, by.x = "IdDueno", by.y = "IdDueno")
+nrow(datosdw)
+head(datosdw)
+
+plot(datosdw$Importe ~ datosdw$Ingreso)
+
+?pairs
+pairs(h[,c("Peso", "IdRaza", "IdEspecie")])
+
+hist(rnorm(1000),30)
+hist(rnorm(10000),breaks=30)
+
+lm(formula= "Importe ~ Ingreso", data=datosdw)
+
+plot(datosdw$Importe,datosdw$Ingreso, xlab="ingreso", ylab="importe", col="yellow")
+abline(lm(formula= "Importe ~ Ingreso", data=datosdw), lwd=2, col="black")
+
+kc <- kmeans(h[,c("Peso", "IdRaza", "IdEspecie")],3)
+plot(h$Peso, h$IdRaza, col=kc$cluster)
+
+str(kc)
+
+kc$centers
+
+summary(h)
