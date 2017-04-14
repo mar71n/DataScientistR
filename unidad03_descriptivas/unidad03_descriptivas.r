@@ -169,12 +169,16 @@ points(kc$centers[,c("Sepal.Length", "Sepal.Width")], col=1:3, pch=8, cex=2)
 
 ## Clase interactiva
 
+# Analisis exploratorio
+
+# Analisis estadistico
 h <- read.csv2("../descargas/unidad03/Mascotas_2a/Mascotas_csv.txt")
 head(h)
 median(h$Peso)
 mean(h$Peso)
 summary(h$Peso)
 
+# Histogramas y cuantiles
 hist(h$Peso,30)
 tama <- length(h$Peso)
 # regla raiz cuadrada
@@ -188,8 +192,10 @@ qqnorm(h$Peso)
 
 qqnorm(h$IdDueno)
 
+# Spigot plot
 boxplot(h$Peso ~ h$IdEspecie)
 
+# Scatter plots
 # importe ~ ingreso
 h2 <- read.csv2("../descargas/unidad03/Mascotas_2a/Duenos_csv.txt")
 h3 <- read.csv2("../descargas/unidad03/Mascotas_2a/Navegacion_csv.txt")
@@ -206,18 +212,23 @@ head(datosdw)
 
 plot(datosdw$Importe ~ datosdw$Ingreso)
 
+# Pairs
 ?pairs
 pairs(h[,c("Peso", "IdRaza", "IdEspecie")])
 
+# Distribuciones
 hist(rnorm(1000),30)
 hist(rnorm(10000),breaks=30)
 
+# Regresion lineal
 lm(formula= "Importe ~ Ingreso", data=datosdw)
 
-plot(datosdw$Importe,datosdw$Ingreso, xlab="ingreso", ylab="importe", col="yellow")
+# plot(x, y, ...)
+plot(datosdw$Ingreso, datosdw$Importe, xlab="ingreso", ylab="importe", col="yellow")
 abline(lm(formula= "Importe ~ Ingreso", data=datosdw), lwd=2, col="black")
 
-kc <- kmeans(h[,c("Peso", "IdRaza", "IdEspecie")],3)
+# Clustering
+kc <- kmeans(h[,c("Peso", "IdRaza", "IdEspecie")],2)
 plot(h$Peso, h$IdRaza, col=kc$cluster)
 
 str(kc)

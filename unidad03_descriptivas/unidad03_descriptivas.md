@@ -1,4 +1,6 @@
 ## Unidad 3
+
+### Analisis exploratorio
 ``` R
 > # Unidad 3
 
@@ -66,7 +68,10 @@ $class
 The following objects are masked from iris (pos = 3):
 
     Petal.Length, Petal.Width, Sepal.Length, Sepal.Width, Species
+```
 
+### Analissi estadistico
+``` R
 > # Analissi estadistico
 > median(iris[["Sepal.Length"]])
 [1] 5.8
@@ -163,6 +168,7 @@ The following objects are masked from iris (pos = 3):
 
 <img src="./graficos/graph9.png" width="30%" />
 
+### Distribuciones
 ``` R
 > # Distribuciones
 > pnorm(27.4, mean=50, sd=20)
@@ -188,7 +194,7 @@ lines(c(27.4, 0))
 ```
 <img src="./graficos/graph0.png" width="30%" />
 
-
+### Introduccion a la regresion lineal
 ``` R
 > # Introduccion a la regresion lineal
 > # install.packages("UsingR")
@@ -261,6 +267,7 @@ Coefficients:
 ```
 <img src="./graficos/graph14.png" width="30%" />
 
+El operador I
 ``` R
 > # el operador I 
 > ?I
@@ -270,25 +277,39 @@ Coefficients:
 [1] "AsIs"
 > class(diamond$carat - mean(diamond$carat))
 [1] "numeric"
+```
+
+``` R
 > fit2 <- lm(price ~ I(carat - mean(carat)), data = diamond)
 > coef(fit2)
            (Intercept) I(carat - mean(carat)) 
               500.0833              3721.0249 
+```
+
+``` R
 > x <- diamond$carat - mean(diamond$carat)
 > fit2 <- lm(price ~ x, data = diamond)
 > coef(fit2)
 (Intercept)           x 
    500.0833   3721.0249 
+```
+
+``` R
 > fit <- lm(price ~ carat, data = diamond)
 > coef(fit)
 (Intercept)       carat 
   -259.6259   3721.0249 
+```
+
+``` R
 > newx <- c(0.16, 0.27, 0.34)
 > coef(fit)[1] + coef(fit)[2] * newx
 [1]  335.7381  745.0508 1005.5225
 > predict(fit, newdata = data.frame(carat=newx))
         1         2         3 
  335.7381  745.0508 1005.5225 
+```
+``` R
 > str(fit)
 List of 12
  $ coefficients : Named num [1:2] -260 3721
@@ -350,6 +371,7 @@ List of 12
 > 
 ```
 
+### Introduccion a clustering
 ``` R
 > # Introduccion a clustering
 > newiris <- iris
@@ -370,3 +392,203 @@ List of 12
 > 
 ```
 <img src="./graficos/graph15.png" width="50%" />
+
+# Clase Interactiva
+## Analisi exploratorio
+
+``` R
+> ## Clase interactiva
+> # Analisis exploratorio
+str(h), head(h), nrow(h), ncol(h), names(h), class(h$iddueño), 
+range(h$iddueño), length(h$iddueño), tail(h), etc.
+```
+## Analisis estadistico descriptivo
+``` R
+> # Analisis estadistico
+> h <- read.csv2("../descargas/unidad03/Mascotas_2a/Mascotas_csv.txt")
+> head(h)
+  IdMascota IdDueno IdEspecie IdRaza  Peso  Edad Sexo
+1         1    5627         1     89 11.81  0.01    M
+2         2     398         1     40  7.78 12.64    M
+3         3    1962         1     35  6.75  0.56    F
+4         4    6113         2    170  6.40  7.07    F
+5         5    1802         2    166  5.42  0.14    M
+6         6    4092         1     36 18.82  0.29    M
+> median(h$Peso)
+[1] 7.98
+> mean(h$Peso)
+[1] 15.48057
+> summary(h$Peso)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.52    4.64    7.98   15.48   25.50   63.40 
+> # Histogramas y cuantiles
+> hist(h$Peso,30)
+```
+
+<img src="./graficos/graph23.png" width="30%" />
+
+Regla de la raiz cuadrada
+``` R
+> tama <- length(h$Peso)
+> # regla raiz cuadrada
+> ndiv <- sqrt(tama)
+> hist(h$Peso,ndiv)
+```
+
+<img src="./graficos/graph24.png" width="30%" />
+
+Regla de Sturges
+``` R
+> # regla de Sturges
+> ndivS <- 1 + log2(tama)
+> hist(h$Peso,ndivS)
+```
+
+<img src="./graficos/graph25.png" width="30%" />
+
+``` R
+> qqnorm(h$Peso)
+```
+<img src="./graficos/graph26.png" width="30%" />
+
+``` R
+> qqnorm(h$IdDueno)
+```
+
+<img src="./graficos/graph27.png" width="30%" />
+
+## Spigot plot
+``` R
+> # Spigot plot
+> boxplot(h$Peso ~ h$IdEspecie)
+```
+
+<img src="./graficos/graph28.png" width="30%" />
+
+## Scatter plots
+``` R
+> # Scatter plots
+> # importe ~ ingreso
+> h2 <- read.csv2("../descargas/unidad03/Mascotas_2a/Duenos_csv.txt")
+> h3 <- read.csv2("../descargas/unidad03/Mascotas_2a/Navegacion_csv.txt")
+> names(h)
+[1] "IdMascota" "IdDueno"   "IdEspecie" "IdRaza"    "Peso"      "Edad"
+[7] "Sexo"
++ names(h2)
+[1] "Id"      "IdDueno" "Perros"  "Gatos"   "Total"   "Edad"    "Sexo"
+[8] "Ingreso"
+> names(h3)
+[1] "Id"        "IdDueno"   "IdPagina"  "DT"        "Secuencia" "Venta"
+[7] "Importe"
+> ?merge
+> h3_con_venta <- h3[h3$Importe >0, ]
+> nrow(h3_con_venta)
+[1] 43093
+> datosdw <- merge(h3_con_venta, h2, by.x = "IdDueno", by.y = "IdDueno")
+> nrow(datosdw)
+[1] 43093
+> head(datosdw)
+  IdDueno   Id.x IdPagina    DT Secuencia Venta Importe Id.y Perros Gatos Total
+1       1  79675       20 12.96        20     1  900.71    5      1     2     3
+2       1 133286        8 12.27    8-6-15     1  485.57    5      1     2     3
+3       1 904153        8  8.74     8-1-1     1  241.52    5      1     2     3
+4       1 372630        9  9.68   9-13-13     1  180.48    5      1     2     3
+5       1 239727        3 10.34         3     1    0.89    5      1     2     3
+6       1 345588        2 13.35    2-19-8     1  196.57    5      1     2     3
+  Edad Sexo Ingreso
+1   60    M  116816
+2   60    M  116816
+3   60    M  116816
+4   60    M  116816
+5   60    M  116816
+6   60    M  116816
+> plot(datosdw$Importe ~ datosdw$Ingreso)
+> 
+```
+
+<img src="./graficos/graph29.png" width="30%" />
+
+## Pairs
+``` R
+ # Pairs
+> ?pairs
+> pairs(h[,c("Peso", "IdRaza", "IdEspecie")])
+```
+<img src="./graficos/graph30.png" width="30%" />
+
+## Distribuciones
+``` R
+> # Distribuciones
+> hist(rnorm(1000),30)
+```
+<img src="./graficos/graph31.png" width="30%" />
+
+``` R
+> hist(rnorm(10000),breaks=30)
+```
+<img src="./graficos/graph32.png" width="30%" />
+
+## Regresion lineal
+``` R
+> # Regresion lineal
+> lm(formula= "Importe ~ Ingreso", data=datosdw)
+
+Call:
+lm(formula = "Importe ~ Ingreso", data = datosdw)
+
+Coefficients:
+(Intercept)      Ingreso
+  1.591e+03   -7.983e-04
+
+> plot(datosdw$Ingreso, datosdw$Importe, xlab="ingreso", ylab="importe", col="yellow")
+> abline(lm(formula= "Importe ~ Ingreso", data=datosdw), lwd=2, col="black")
+> 
+```
+<img src="./graficos/graph33.png" width="30%" />
+
+## Clustering
+``` R
+> # Clustering
+> kc <- kmeans(h[,c("Peso", "IdRaza", "IdEspecie")],2)
+> plot(h$Peso, h$IdRaza, col=kc$cluster)
+```
+<img src="./graficos/graph34.png" width="30%" />
+
+``` R
+> str(kc)
+List of 9
+ $ cluster     : int [1:10000] 1 1 1 2 2 1 1 1 2 1 ...
+ $ centers     : num [1:2, 1:3] 20 4.2 50.8 150.9 1 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:2] "1" "2"
+  .. ..$ : chr [1:3] "Peso" "IdRaza" "IdEspecie"
+ $ totss       : num 3.1e+07
+ $ withinss    : num [1:2] 7543563 2444587
+ $ tot.withinss: num 9988150
+ $ betweenss   : num 21055276
+ $ size        : int [1:2] 7124 2876
+ $ iter        : int 1
+ $ ifault      : int 0
+ - attr(*, "class")= chr "kmeans"
+> kc$centers
+       Peso    IdRaza IdEspecie
+1 20.034642  50.75632         1
+2  4.199896 150.88039         2
+> summary(h)
+   IdMascota        IdDueno       IdEspecie         IdRaza
+ Min.   :    1   Min.   :   0   Min.   :1.000   Min.   :  1.00
+ 1st Qu.: 2501   1st Qu.:2039   1st Qu.:1.000   1st Qu.: 36.00
+ Median : 5000   Median :4043   Median :1.000   Median : 71.00
+ Mean   : 5000   Mean   :4019   Mean   :1.288   Mean   : 79.55
+ 3rd Qu.: 7500   3rd Qu.:6009   3rd Qu.:2.000   3rd Qu.:114.00
+ Max.   :10000   Max.   :7999   Max.   :2.000   Max.   :200.00
+      Peso            Edad       Sexo
+ Min.   : 0.52   Min.   : 0.00   F:5009
+ 1st Qu.: 4.64   1st Qu.: 0.99   M:4991
+ Median : 7.98   Median : 3.90
+ Mean   :15.48   Mean   : 5.35
+ 3rd Qu.:25.50   3rd Qu.: 8.82
+ Max.   :63.40   Max.   :19.26
+> 
+```
+
