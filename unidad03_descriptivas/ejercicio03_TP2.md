@@ -1,3 +1,5 @@
+# Unidad 3
+## Ejercicios base mascotas
 ``` R
 > # Unidad 3
 
@@ -22,7 +24,8 @@
 10 10         10 Pileta
 > names(ClasificacionProductos)
 [1] "Id"         "IdProducto" "Tipo"      
-
+```
+``` R
 > ProductosxPagina <- read.csv2("../descargas/unidad03/Mascotas_2a/ProductosxPagina_csv.txt")
 > head(ProductosxPagina)
   IdPágina IdProducto Tipo
@@ -43,6 +46,8 @@
 > names(ProductosxPagina)
 [1] "IdPágina"   "IdProducto" "Tipo"      
 
+```
+``` R
 > Navegacion <- read.csv2("../descargas/unidad03/Mascotas_2a/Navegacion_csv.txt")
 > head(Navegacion)
   Id IdDueño IdPágina          DT Secuencia Venta Importe
@@ -63,7 +68,8 @@
 > names(Navegacion)
 [1] "Id"        "IdDueño"   "IdPágina"  "DT"        "Secuencia" "Venta"    
 [7] "Importe"  
-
+``` 
+``` R
 > Duenos <- read.csv2("../descargas/unidad03/Mascotas_2a/Duenos_csv.txt")
 > head(Duenos)
   Id IdDueño Perros Gatos Total Edad Sexo Ingreso
@@ -84,7 +90,8 @@
 > names(Duenos)
 [1] "Id"      "IdDueño" "Perros"  "Gatos"   "Total"   "Edad"    "Sexo"   
 [8] "Ingreso"
-
+```
+``` R
 > Mascotas <- read.csv2("../descargas/unidad03/Mascotas_2a/Mascotas_csv.txt")
 > head(Mascotas)
   IdMascota IdDueño IdEspecie IdRaza  Peso  Edad Sexo
@@ -107,3 +114,20 @@
 [7] "Sexo"     
 > 
 ```
+
+``` R
+> paste(c("ClasificacionProductos : ", names(ClasificacionProductos)), collapse=" - ")
+[1] "ClasificacionProductos :  - Id - IdProducto - Tipo"
+> paste(c("ProductosxPagina : ", names(ProductosxPagina)), collapse=" - ")
+[1] "ProductosxPagina :  - IdPagina - IdProducto - Tipo"
+> paste(c("Navegacion : ", names(Navegacion)), collapse=" - ")
+[1] "Navegacion :  - Id - IdDueno - IdPagina - DT - Secuencia - Venta - Importe"
+> paste(c("Duenos : ", names(Duenos)), collapse=" - ")
+[1] "Duenos :  - Id - IdDueno - Perros - Gatos - Total - Edad - Sexo - Ingreso"
+> paste(c("Mascotas : ",names(Mascotas)), collapse=" - ")
+[1] "Mascotas :  - IdMascota - IdDueno - IdEspecie - IdRaza - Peso - Edad - Sexo"
+> 
+```
+
+
+
