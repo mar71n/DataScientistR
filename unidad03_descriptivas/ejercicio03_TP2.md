@@ -129,7 +129,7 @@
 > 
 ```
 
-## Analisis exploratorio
+# 1. Analisis exploratorio
 
 Generar el histograma de la distribución de las ventas.
 
@@ -277,3 +277,80 @@ Ventas x pagina
 20       20     3138998        2104     3014
 > 
 ```
+
+# 2. Correlaciones
+
+Identificar los atributos de los dueños más correlacionados con las ventas
+
+Identificar los atributos de las mascotas más correlacionados con las ventas
+
+Identificar los atributos de la navegación más correlacionados con las ventas
+``` R
+> ## Correlaciones
+> # a. Identificar los atributos de los dueños más correlacionados con las ventas
+> # b. Identificar los atributos de las mascotas más correlacionados con las ventas
+> # c. Identificar los atributos de la navegación más correlacionados con las ventas
+> 
+```
+c.
+``` R
+> str(Navegacion)
+'data.frame':	1048573 obs. of  7 variables:
+ $ Id       : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ IdDueno  : num  1 2 2 1 2 2 2 2 2 2 ...
+ $ IdPagina : num  4 19 1 1 6 12 4 11 9 9 ...
+ $ DT       : num  0.23 2.81 1.03 5.03 5.64 ...
+ $ Secuencia: Factor w/ 8420 levels "1","1-1","1-1-1",..: 1 4211 212 1 6737 1601 5976 1142 8058 8403 ...
+ $ Venta    : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Importe  : num  0 0 0 0 0 0 0 0 0 0 ...
+> nrow(Navegacion)
+[1] 1048573
+> head(subset(Navegacion,select=c(IdPagina,IdDueno,DT,Venta, Importe)))
+  IdPagina IdDueno          DT Venta Importe
+1        4       1 0.230000000     0       0
+2       19       2 2.810000000     0       0
+3        1       2 1.030000000     0       0
+4        1       1 5.030000000     0       0
+5        6       2 5.640000000     0       0
+6       12       2 0.004689429     0       0
+```
+``` R
+> datos_cor <- subset(Navegacion,select=c(IdPagina,IdDueno,DT,Venta, Importe))
+> cor(datos_cor, use="pairwise.complete.obs")
+              IdPagina       IdDueno           DT         Venta       Importe
+IdPagina  1.0000000000  0.0020068560 0.0009102326  0.0028936243 -0.0005175931
+IdDueno   0.0020068560  1.0000000000 0.0001385579 -0.0008698551 -0.0049730214
+DT        0.0009102326  0.0001385579 1.0000000000  0.3391152579  0.1766406628
+Venta     0.0028936243 -0.0008698551 0.3391152579  1.0000000000  0.5215426827
+Importe  -0.0005175931 -0.0049730214 0.1766406628  0.5215426827  1.0000000000
+> # el atributo de Navegacion mas correlacionado con las ventas es DT
+```
+``` R
+> # Secuencia solo se correlaciona levemente con IdPagina
+> head(as.numeric(Navegacion$Secuencia))
+[1]    1 4211  212    1 6737 1601
+> head(subset(Navegacion,select=c(IdPagina,IdDueno, DT,Venta, Importe)))
+> datos_cor <- subset(Navegacion,select=c(IdPagina,IdDueno,DT,Venta, Importe))
+> head(datos_cor)
+> datos_cor$Secuencia <- as.numeric(Navegacion$Secuencia)
+> cor(datos_cor, use="pairwise.complete.obs")
+               IdPagina       IdDueno           DT         Venta       Importe
+IdPagina   1.0000000000  0.0020068560 0.0009102326  0.0028936243 -0.0005175931
+IdDueno    0.0020068560  1.0000000000 0.0001385579 -0.0008698551 -0.0049730214
+DT         0.0009102326  0.0001385579 1.0000000000  0.3391152579  0.1766406628
+Venta      0.0028936243 -0.0008698551 0.3391152579  1.0000000000  0.5215426827
+Importe   -0.0005175931 -0.0049730214 0.1766406628  0.5215426827  1.0000000000
+Secuencia -0.2295237308 -0.0023354199 0.0002125272 -0.0005594549 -0.0010893389
+              Secuencia
+IdPagina  -0.2295237308
+IdDueno   -0.0023354199
+DT         0.0002125272
+Venta     -0.0005594549
+Importe   -0.0010893389
+Secuencia  1.0000000000
+> 
+```
+a.
+
+
+

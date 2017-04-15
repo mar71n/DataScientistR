@@ -101,3 +101,36 @@ ventas_x_pg[order(ventas_x_pg$SumImportes, decreasing=TRUE),]
 
 ## Correlaciones
 
+# a. Identificar los atributos de los dueños más correlacionados con las ventas
+# b. Identificar los atributos de las mascotas más correlacionados con las ventas
+# c. Identificar los atributos de la navegación más correlacionados con las ventas
+
+## c.
+str(Navegacion)
+nrow(Navegacion)
+head(subset(Navegacion,select=c(IdPagina,IdDueno,DT,Venta, Importe)))
+datos_cor <- subset(Navegacion,select=c(IdPagina,IdDueno,DT,Venta, Importe))
+cor(datos_cor, use="pairwise.complete.obs")
+# el atributo de Navegacion mas correlacionado con las ventas es DT
+
+# Secuencia solo se correlaciona levemente con IdPagina
+head(as.numeric(Navegacion$Secuencia))
+head(subset(Navegacion,select=c(IdPagina,IdDueno, DT,Venta, Importe)))
+datos_cor <- subset(Navegacion,select=c(IdPagina,IdDueno,DT,Venta, Importe))
+head(datos_cor)
+datos_cor$Secuencia <- as.numeric(Navegacion$Secuencia)
+cor(datos_cor, use="pairwise.complete.obs")
+
+## a.
+nrow(Navegacion)
+length(unique(Navegacion$IdDueno))
+summary(Navegacion$IdDueno)
+nrow(Navegacion[Navegacion$IdDueno == 0,])
+nrow(Duenos)
+summary(Duenos$IdDueno)
+length(unique(Duenos$IdDueno))
+datos_cor_v_d <- merge(Navegacion, Duenos, by.x="IdDueno", by.y="IdDueno")
+head(datos_cor_v_d)
+tail(datos_cor_v_d)
+nrow(datos_cor_v_d)
+
