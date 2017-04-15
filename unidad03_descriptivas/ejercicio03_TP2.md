@@ -129,5 +129,151 @@
 > 
 ```
 
+## Analisis exploratorio
 
+Generar el histograma de la distribución de las ventas.
 
+Identificar las páginas que más ventas produjeron.
+
+``` R
+> ## 1 Analisi exploratorio
+> # Generar el histograma de la distribución de las ventas.
+> # Identificar las páginas que más ventas produjeron.
+> table(Navegacion[["IdPagina"]])
+
+    1     2     3     4     5     6     7     8     9    10    11    12    13 
+52430 52463 52534 52251 52127 52431 52279 52567 52274 52571 52362 52675 52379 
+   14    15    16    17    18    19    20 
+52579 52312 52489 52315 52752 52475 52308 
+> table(Navegacion[["Venta"]])
+
+     0      1 
+988540  60033 
+```
+``` R
+> head(Navegacion[Navegacion$Venta == 1 | Navegacion$Importe > 0 ,c(3,6,7)])
+   IdPagina Venta Importe
+35        2     1 2351.50
+60       18     1 1262.19
+73       19     1  569.55
+85       11     1    0.00
+87       10     1    0.00
+91       18     1 2630.18
+> head(Navegacion[Navegacion$Venta == 1 & Navegacion$Importe == 0 ,c(3,6,7)])
+    IdPagina Venta Importe
+85        11     1       0
+87        10     1       0
+179       20     1       0
+192       20     1       0
+194       15     1       0
+292       10     1       0
+```
+## Sobre cantidad de breaks
+``` R
+> length(Navegacion[Navegacion$Venta == 1 & Navegacion$Importe == 0 ,c(7)])
+[1] 16940
+> sqrt(nrow(Navegacion))
+[1] 1023.999
+> sqrt(length(Navegacion[Navegacion$Venta == 1 | Navegacion$Importe > 0, c(7)]))
+[1] 245.0163
+> # [1] 245.0163 => breaks = 245
+```
+``` R
+> 1 + log2(length(Navegacion[Navegacion$Venta == 1 | Navegacion$Importe > 0, c(7)]))
+[1] 16.87347
+> # [1] 16.87347 => breaks = 17
+```
+``` R
+> hist(Navegacion[Navegacion$Venta == 1 | Navegacion$Importe > 0, c(7)],breaks=245, main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0")
+> hist(Navegacion[Navegacion$Venta == 1 | Navegacion$Importe > 0, c(7)],breaks=17, main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0")
+> hist(Navegacion[Navegacion$Venta == 1 | Navegacion$Importe > 0, c(7)],breaks="Sturges", main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0")
+```
+``` R
+> x <- sqrt(1:1000)
+> plot(1:1000,x, ylim=c(0,15), col="red",ylab="f(x)")
+> text(200,11, labels="sqrt(x)")
+> par(new=TRUE)
+> y <- 1 + log2(1:1000)
+> plot(1:1000,y, ylim=c(0,15), col="blue", ylab="")
+> text(600,8, labels="1 + log2(x)")
+```
+<img src="./graficos/graph_breaks.png" width="40%" />
+
+Histogramas
+``` R
+> hist(Navegacion[Navegacion$Venta == 1 | Navegacion$Importe > 0, c(7)],breaks=100, main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0")
+```
+<img src="./graficos/graph_Ha.png" width="40%" />
+
+``` R
+> hist(Navegacion[(Navegacion$Venta == 1 | Navegacion$Importe > 0) & Navegacion$Importe < 2500, c(7)],breaks=100, main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0 \n Importe < 2500")
+```
+<img src="./graficos/graph_Hb.png" width="40%" />
+
+``` R
+> hist(Navegacion[Navegacion$Importe > 0, c(7)],breaks=100, main="Importe > 0")
+```
+<img src="./graficos/graph_Hc.png" width="40%" />
+
+``` R
+> range(Navegacion$Importe)
+[1]     0.00 15365.53
+> min(Navegacion[Navegacion$Importe > 0 , 7])
+[1] 0.01
+```
+Ventas x pagina
+``` R
+> # vantas por pagina
+> # en total de Importe
+> hist(Navegacion[Navegacion$Importe > 0, c(7)],breaks=150, main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0",col=Navegacion$IdPagina)
+> sort(unique(Navegacion$IdPagina))
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+> ventasi_x_pg <- aggregate(Navegacion$Importe, by = list(IdPagina = Navegacion$IdPagina), FUN="sum")
+> names(ventasi_x_pg) <- c("IdPagina", "TotalImporte")
++ ventasi_x_pg <- ventasi_x_pg[order(ventasi_x_pg$TotalImporte, decreasing=TRUE),]
+> # ventasi_x_pg
+> # en cantidad de ventas de importe > 0
+> length(Navegacion$Importe[which(Navegacion$Importe > 0)])
+[1] 43093
+> ventasn_x_pg <- aggregate(Navegacion$Importe[which(Navegacion$Importe > 0)], by = list(IdPagina = Navegacion$IdPagina[which(Navegacion$Importe > 0)]), FUN="length")
+> names(ventasn_x_pg) <- c("IdPagina", "CantVentas")
+> ventasn_x_pg <- ventasn_x_pg[order(ventasn_x_pg$CantVentas, decreasing=TRUE),]
+> # ventasn_x_pg
+> # en cantidad de ventas = 1
+> length(Navegacion$Importe[which(Navegacion$Venta == 1)])
+[1] 60033
+> ventasn1_x_pg <- aggregate(Navegacion$Importe[which(Navegacion$Venta == 1)], by = list(IdPagina = Navegacion$IdPagina[which(Navegacion$Venta == 1)]), FUN="length")
+> names(ventasn1_x_pg) <- c("IdPagina", "CantVentas1")
+> ventasn1_x_pg <- ventasn1_x_pg[order(ventasn1_x_pg$CantVentas, decreasing=TRUE),]
+> # ventasn1_x_pg
+> ventas_x_pg <- as.data.frame( cbind(ventasi_x_pg$IdPagina[order(ventasi_x_pg$IdPagina)], 
++                 ventasi_x_pg$TotalImporte[order(ventasi_x_pg$IdPagina)],
++                 ventasn_x_pg$CantVentas[order(ventasn_x_pg$IdPagina)],
++                 ventasn1_x_pg$CantVentas1[order(ventasn1_x_pg$IdPagina)]) )
+> names(ventas_x_pg) <- c("IdPagina","SumImportes","TotImportes","TotVenas")
+```
+``` R
+> ventas_x_pg[order(ventas_x_pg$SumImportes, decreasing=TRUE),]
+   IdPagina SumImportes TotImportes TotVenas
+4         4     3651141        2178     3013
+18       18     3624026        2253     3191
+12       12     3584630        2203     3060
+1         1     3489205        2139     2945
+14       14     3477520        2235     3074
+17       17     3475739        2246     3104
+16       16     3428532        2276     3105
+6         6     3410362        2144     2973
+15       15     3391075        2164     3040
+7         7     3386140        2103     2943
+2         2     3375899        2100     2961
+11       11     3348423        2191     3041
+13       13     3326757        2143     2904
+8         8     3289032        2145     3028
+10       10     3285845        2061     2949
+5         5     3263901        2205     3029
+9         9     3211731        2061     2853
+3         3     3183446        2062     2895
+19       19     3140510        2080     2911
+20       20     3138998        2104     3014
+> 
+```

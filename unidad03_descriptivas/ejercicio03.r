@@ -69,12 +69,35 @@ range(Navegacion$Importe)
 min(Navegacion[Navegacion$Importe > 0 , 7])
 
 # vantas por pagina
+# en total de Importe
 hist(Navegacion[Navegacion$Importe > 0, c(7)],breaks=150, main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0",col=Navegacion$IdPagina)
 sort(unique(Navegacion$IdPagina))
-ventas_x_pg <- aggregate(Navegacion$Importe, by = list(IdPagina = Navegacion$IdPagina), FUN="sum")
-names(ventas_x_pg) <- c("IdPagina", "TotalImporte")
-ventas_x_pg <- ventas_x_pg[order(ventas_x_pg$TotalImporte, decreasing=TRUE),]
-ventas_x_pg
+ventasi_x_pg <- aggregate(Navegacion$Importe, by = list(IdPagina = Navegacion$IdPagina), FUN="sum")
+names(ventasi_x_pg) <- c("IdPagina", "TotalImporte")
+ventasi_x_pg <- ventasi_x_pg[order(ventasi_x_pg$TotalImporte, decreasing=TRUE),]
+# ventasi_x_pg
+
+# en cantidad de ventas de importe > 0
+length(Navegacion$Importe[which(Navegacion$Importe > 0)])
+ventasn_x_pg <- aggregate(Navegacion$Importe[which(Navegacion$Importe > 0)], by = list(IdPagina = Navegacion$IdPagina[which(Navegacion$Importe > 0)]), FUN="length")
+names(ventasn_x_pg) <- c("IdPagina", "CantVentas")
+ventasn_x_pg <- ventasn_x_pg[order(ventasn_x_pg$CantVentas, decreasing=TRUE),]
+# ventasn_x_pg
+
+# en cantidad de ventas = 1
+length(Navegacion$Importe[which(Navegacion$Venta == 1)])
+ventasn1_x_pg <- aggregate(Navegacion$Importe[which(Navegacion$Venta == 1)], by = list(IdPagina = Navegacion$IdPagina[which(Navegacion$Venta == 1)]), FUN="length")
+names(ventasn1_x_pg) <- c("IdPagina", "CantVentas1")
+ventasn1_x_pg <- ventasn1_x_pg[order(ventasn1_x_pg$CantVentas, decreasing=TRUE),]
+# ventasn1_x_pg
+
+ventas_x_pg <- as.data.frame( cbind(ventasi_x_pg$IdPagina[order(ventasi_x_pg$IdPagina)], 
+                ventasi_x_pg$TotalImporte[order(ventasi_x_pg$IdPagina)],
+                ventasn_x_pg$CantVentas[order(ventasn_x_pg$IdPagina)],
+                ventasn1_x_pg$CantVentas1[order(ventasn1_x_pg$IdPagina)]) )
+names(ventas_x_pg) <- c("IdPagina","SumImportes","TotImportes","TotVenas")
+ventas_x_pg[order(ventas_x_pg$SumImportes, decreasing=TRUE),]
+
 
 ## Correlaciones
 
