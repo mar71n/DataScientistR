@@ -167,11 +167,11 @@ Identificar las páginas que más ventas produjeron.
 192       20     1       0
 194       15     1       0
 292       10     1       0
+> length(Navegacion[Navegacion$Venta == 1 & Navegacion$Importe == 0 ,c(7)])
+[1] 16940
 ```
 ## Sobre cantidad de breaks
 ``` R
-> length(Navegacion[Navegacion$Venta == 1 & Navegacion$Importe == 0 ,c(7)])
-[1] 16940
 > sqrt(nrow(Navegacion))
 [1] 1023.999
 > sqrt(length(Navegacion[Navegacion$Venta == 1 | Navegacion$Importe > 0, c(7)]))
