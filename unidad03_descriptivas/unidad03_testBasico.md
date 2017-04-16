@@ -60,6 +60,10 @@ x
 ```
 <img src="./graficos/graph19.png" width="40%" />
 
+## Ejercicio 1.2.3
+Calcule el promedio de la tirada de los dados del ejercicio anterior 
+para las primeras 10,20,30,40,80,160,1000,2000,10000 tiradas
+Graficar
 ``` R
 > ## Promedio
 > # Ejercicio 1.2.3
@@ -92,6 +96,10 @@ x
 ```
 <img src="./graficos/graph20.png" width="40%" />
 
+## Ejercicio 1.2.6
+Calcule los desvíos estándar para las primeras
+10,20,30,40,80,160,1000,2000,10000 tiradas
+Graficar
 ``` R
 > # Ejercicio 1.2.6
 > ?sd
@@ -124,6 +132,7 @@ x
 ```
 <img src="./graficos/graph21.png" width="40%" />
 
+## Ejercicio 1.2.7
 ``` R
 > # Ejercicio 1.2.7
 > k <- 10
@@ -146,6 +155,7 @@ x
 ```
 <img src="./graficos/graph22.png" width="50%" />
 
+## Otro ejemplo
 En lugar del ejemplo del transito tomo datos de iris
 ``` R
 > # ajusto Petal.Length para la Specie Setosa con dnorm
@@ -163,7 +173,8 @@ En lugar del ejemplo del transito tomo datos de iris
 ```
 <img src="./graficos/graph1.png" width="60%" />
 
-## Inferencia estadistica
+---
+# Inferencia estadistica
 ``` R
  ## Inferencia estadistica
 > sample(c(0,1),10,replace=TRUE,prob=c(0.75,0.25))
@@ -223,6 +234,7 @@ En lugar del ejemplo del transito tomo datos de iris
 > 
 ```
 
+## Ejemplo sobrepeso
 ``` R
 > # Nos dicen que el 15% de la poblacion mundial tiene sobrepeso.
 > # queremos saber si en Bs. As es la misma tasa
@@ -289,15 +301,12 @@ Volviendo al tema del sobrepeso
 ```
 <img src="./graficos/graph2.png" width="60%" />
 
+## Ejercicio 1.2.8
+Un apostador empedernido lo contrata para saber si le están haciendo trampa con los
+dados.
+Para eso le pasa una serie de 1.000 tiradas del dado en cuestión:
 ``` R
 > # Ejercicio 1.2.8
-> x <- sample(1:6,1000,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
-> table(x)
-x
-  1   2   3   4   5   6
-168 146 155 195 159 177
-> sum(table(x))
-[1] 1000
 > # serie que se nos entrega
 > serie <- c(rep(1,170),rep(2,235), rep(3,163),rep(4,105),rep(5,168),rep(6,159))
 > tserie <- table(serie)
@@ -305,44 +314,78 @@ x
 serie
   1   2   3   4   5   6
 170 235 163 105 168 159
-> sum(table(serie))
-[1] 1000
-> pserie <- tserie / 1000
-> pserie
-serie
-    1     2     3     4     5     6
-0.170 0.235 0.163 0.105 0.168 0.159
-> 1000/6
-[1] 166.6667
-> 166/1000
-[1] 0.166
-> serie_teorica <- c(rep(1,167),rep(2,167),rep(3,167),rep(4,167),rep(5,166),rep(6,166))
-> tserie_teorica <- table(serie_teorica)
-> pserie_teorica <- tserie_teorica / 1000
-> pserie_teorica
-serie_teorica
-    1     2     3     4     5     6
-0.167 0.167 0.167 0.167 0.166 0.166
-> abs(pserie - pserie_teorica)
-serie
-    1     2     3     4     5     6
-0.003 0.068 0.004 0.062 0.002 0.007
-> # en el ejercico 1.2.1 vimos que P(n) se acercaba a un poco mas de 1.6 al aumentar las tiradas
-> # calculo una serie suponiendo P(n) = 1/6 para todas las caras del dado
-> serie_aleatoria <- sample(1:6,1000,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
-> tserie_aleatoria <- table(serie_aleatoria)
-> tserie_aleatoria
-serie_aleatoria
-  1   2   3   4   5   6
-166 159 176 174 164 161
-> pserie_aleatoria <- tserie_aleatoria / 1000
-> pserie_aleatoria
-serie_aleatoria
-    1     2     3     4     5     6
-0.166 0.159 0.176 0.174 0.164 0.161
-> abs(pserie - pserie_aleatoria)
-serie
-    1     2     3     4     5     6
-0.004 0.076 0.013 0.069 0.004 0.002
->
 ```
+En 1.2.3 vimos que promedio para 10000 tiradas = 3.527000
+
+En 1.2.6 vimos que sd para 10000 tiradas = 1.709289
+
+``` R
+> pnorm(3.343, mean=3.527000, sd=1.709289)
+[1] 0.4571378
+> # [1] 0.4571378
+> qnorm(0.4571378, mean=3.527000, sd=1.709289)  # matematicamente, qnorm es la inversa a pnorm
+[1] 3.343
+> # [1] 3.343
+> qnorm(0.95, mean=3.527000, sd=1.709289)
+[1] 6.33853
+> # [1] 6.33853
+> qnorm(0.05, mean=3.527000, sd=1.709289)
+[1] 0.7154698
+> # [1] 0.7154698
+> plot(function(x) dnorm(x, mean=3.527000, sd=1.709289), 0, 8, main = "pnorm serie \n x=3.343 y=0.457", ylab="", yaxt="n")
+> abline(v=3.34, col="blue")
+> abline(h=0.457, col="blue")
+> abline(v=6.33, col="red")
+> abline(v=0.71, col="red")
+> axis(2)
+> pnorm(3.343, mean=3.527000, sd=1.709289)
+[1] 0.4571378
+> # [1] 0.4571378
+```
+No hay elemementos para desechar H0 = el dado esta equilibrado
+
+Es probable un promedio de 3.343 en 1000 tiradas con un dado equilibrado
+
+<img src="./graficos/graph_promedios.png" width="50%" />
+
+Pero bajo la alfombra del promedio se puede esconder muchas cosas
+
+Intento otra prueba
+
+``` R
+> # defino una funcion que me devuelve las veces que salio el numero que menos salio
+> min_en1000 <- function(j){  # la j no la uso, es para poder usas sapply
++   x <- sample(1:6,1000,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
++   tx <- table(x)
++   mintx <- min(tx)
++ }
+> # genero una serie de 100 minimos correspondientes a registrar 100 veces 1000 tiradas
+> serie_min <- sapply(1:100, min_en1000)
+> serie_min
+  [1] 155 156 157 157 155 149 138 160 149 157 156 134 138 145 143 153 150 160
+ [19] 156 149 157 146 155 152 147 156 153 146 155 157 147 159 155 155 155 155
+ [37] 157 153 146 145 158 151 148 157 149 144 161 145 151 144 143 154 145 149
+ [55] 159 158 156 141 147 158 139 153 147 149 154 151 151 143 145 152 148 155
+ [73] 153 153 153 151 138 158 153 146 151 139 157 149 164 158 140 158 144 153
+ [91] 157 154 138 151 155 153 150 151 150 152
+> min(serie_min)
+[1] 134
+> mean(serie_min)
+[1] 151.02
+> sd(serie_min)
+[1] 6.144686
+> pnorm(105, mean=mean(serie_min), sd=sd(serie_min))
+[1] 3.459522e-14
+> # ahora si, muy baja, ese 105 es muy sospechoso
+> # funcion de densidad con los parametros mean y sd de la serie de minimos
+> plot(function(x) dnorm(x, mean=mean(serie_min), sd=sd(serie_min)), 100, 200, main = "dnorm serie minimos",ylab="")
+> abline(v=105, col = "red")
+> abline(v=qnorm(0.05, mean=mean(serie_min), sd=sd(serie_min)), col= "blue")
+> abline(v=qnorm(0.95, mean=mean(serie_min), sd=sd(serie_min)), col= "blue")
+> 
+```
+<img src="./graficos/graph_dnorm_minimos.png" width="50%" />
+
+Ahora si tengo información para rechazar H0
+
+
