@@ -301,6 +301,20 @@ abline(v=qnorm(0.95, mean=mean(serie_min), sd=sd(serie_min)), col= "blue")
 plot(function(x) pnorm(x, mean=mean(serie_min), sd=sd(serie_min)), -1, 250, main = "pnorm serie minimos\n x=105",ylab="")
 
 
+## Prueba con t-studen
+
+# serie que se nos entrega
+serie <- c(rep(1,170),rep(2,235), rep(3,163),rep(4,105),rep(5,168),rep(6,159))
+
+x <- sample(1:6,1000,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+
+?t.test
+
+datos <- as.data.frame(cbind(table(serie),rep(1/6,6)))
+names(datos) <- c("frec","prob")
+datos
+chisq.test(datos$frec,p=datos$prob)
+
 
 ## Pruebas que deseche
 
