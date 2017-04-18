@@ -416,8 +416,10 @@ length(com$Var1)
 solo1 <- com[com$Var1==1 | com$Var2==1,]
 length(solo1$Var1)
 11/36
+binom.test(1,2,p=1/6)
 
 # probabilidad de obtener 3 veces AS al arrojar 4 veces un dado equilibrado
 c_4_3 <- factorial(4) / factorial(3) * factorial(1)
 c_4_3 * ((1/6) ^ 3) * (5/6)
 5/324
+binom.test(3,4,p=1/6)
