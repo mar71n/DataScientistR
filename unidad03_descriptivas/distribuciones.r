@@ -31,9 +31,7 @@ binom.test(165,1000,p=1/6)
 # (como la cara y cruz de una moneda) se ajusta a una probabilidad determinada.
 # Al lanzar un dado 30 veces se obtienen 12 veces el 2
 # ¿Se ajusta a una probabilidad de 1/6?
- 
 binom.test(12,30,p=1/6)
-
 # Como p-value < 0.05 el resultado obtenido no se ajusta a lo esperado en un dado.
 
 
@@ -45,23 +43,41 @@ binom.test(12,30,p=1/6)
 # Al responder 30 personas una encuesta con respuestas: mucho, normal, poco; se obtienen los resultados:
 # 15, 5, 10, respectivamente
 # ¿Estos resultados son significativamente distintos de unas respuestas equiprobables, es decir, 10, 10, 10?
- 
 respuestas <- c(15,5,10)
 probabilidad <- c(1/3,1/3,1/3)
- 
 test <- chisq.test(respuestas, p=probabilidad)
 print(test)
-
 # Como p-value > 0.05 no podemos rechazar el que las respuestas sean equiprobables.
+
+## t.test
+# La t de Student se utiliza para comprobar la igualdad de las medias de dos muestras. 
+# También para comprobar si la media de una muestra es igual a una media teórica determinada. 
+# Los datos tienen que tener distribución normal (véase la prueba de Shapiro-Wilk. 
+# En el caso de que este requisito no se cumpla se puede utilizar en su lugar la prueba de los rangos con signo de Wilcoxon.
+# Comparación de dos medias, t de student
+# Prueba paramétrica
+set.seed(10)
+x1 <- rnorm(100,10) # Variable aleatoria de media 10
+x2 <- rnorm(100,10.5) # Variable aleatoria de media 10.5
+test <- t.test(x1,x2) # Prueba t de Student
+print(test)
+# Dado que p-value < 0.05 podemos afirmar que las muestras difieren en su media.
 
 
 ## ejemplo dados ejercicio 1.2.8
 
+## binom.test
 binom.test(105,1000,p=1/6)
 
+## chisq.test
 respuestas <- c(170, 235, 163, 105, 168, 159)
 probabilidad <- c(1/6,1/6,1/6,1/6,1/6,1/6)
 test <- chisq.test(respuestas, p=probabilidad)
 print(test)
 
-
+## t.test
+serie <- c(rep(1,170),rep(2,235), rep(3,163),rep(4,105),rep(5,168),rep(6,159))
+aleatoria <- sample(1:6,1000,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+t.test(serie, aleatoria)
+teorica <- c(rep(1,167),rep(2,167), rep(3,167),rep(4,167),rep(5,166),rep(6,166))
+t.test(serie, teorica)
