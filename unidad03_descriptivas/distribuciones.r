@@ -31,7 +31,14 @@ binom.test(165,1000,p=1/6)
 # (como la cara y cruz de una moneda) se ajusta a una probabilidad determinada.
 # Al lanzar un dado 30 veces se obtienen 12 veces el 2
 # ¿Se ajusta a una probabilidad de 1/6?
-binom.test(12,30,p=1/6)
+test_binom <- binom.test(12,30,p=1/6)
+print(test_binom)
+str(test_binom)
+mean(test_binom$conf.int)
+plot(0:15, pbinom(0:15, 30, 0.15), type="l")
+abline(v=12)
+abline(v=8)
+abline(v=1)
 # Como p-value < 0.05 el resultado obtenido no se ajusta a lo esperado en un dado.
 
 

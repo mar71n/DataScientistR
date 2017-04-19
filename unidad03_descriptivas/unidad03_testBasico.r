@@ -287,6 +287,7 @@ min(serie_min)
 mean(serie_min)
 sd(serie_min)
 pnorm(105, mean=mean(serie_min), sd=sd(serie_min))
+# [1] 4.263181e-12
 # ahora si, muy baja, ese 105 es muy sospechoso
 
 # funcion de densidad con los parametros mean y sd de la serie de minimos
@@ -295,25 +296,28 @@ abline(v=105, col = "red")
 abline(v=qnorm(0.05, mean=mean(serie_min), sd=sd(serie_min)), col= "blue")
 abline(v=qnorm(0.95, mean=mean(serie_min), sd=sd(serie_min)), col= "blue")
 
-
-
 # el grafico de la probabilidad acumulada con los parametros mean y sd de la serie de minimos
 plot(function(x) pnorm(x, mean=mean(serie_min), sd=sd(serie_min)), -1, 250, main = "pnorm serie minimos\n x=105",ylab="")
 
-
 ## Prueba con t-studen
-
-# serie que se nos entrega
+## t.test
+# la serie dada
 serie <- c(rep(1,170),rep(2,235), rep(3,163),rep(4,105),rep(5,168),rep(6,159))
+# una serie teorica con que compararla
+teorica <- c(rep(1,167),rep(2,167), rep(3,167),rep(4,167),rep(5,166),rep(6,166))
+test_ttest <- t.test(serie, teorica)
+print(test_ttest[["p.value"]])
+# [1] 0.04698786
+# p-value < 0.05
 
-x <- sample(1:6,1000,replace=TRUE,prob=c(1/6,1/6,1/6,1/6,1/6,1/6))
+## Prueba con binom.test
+## binom.test
+test_tbinom <- binom.test(105,1000,p=1/6)
+print(test_tbinom)
+print(test_tbinom[["p.value"]])
+# [1] 3.935285e-08
+# p-value < 0.05
 
-?t.test
-
-datos <- as.data.frame(cbind(table(serie),rep(1/6,6)))
-names(datos) <- c("frec","prob")
-datos
-chisq.test(datos$frec,p=datos$prob)
 
 
 ## Pruebas que deseche

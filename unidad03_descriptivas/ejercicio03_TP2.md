@@ -199,7 +199,7 @@ Identificar las páginas que más ventas produjeron.
 ```
 <img src="./graficos/graph_breaks.png" width="40%" />
 
-Histogramas
+## Histogramas
 ``` R
 > hist(Navegacion[Navegacion$Venta == 1 | Navegacion$Importe > 0, c(7)],breaks=100, main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0")
 ```

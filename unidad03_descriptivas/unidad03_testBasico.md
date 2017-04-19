@@ -388,4 +388,28 @@ Intento otra prueba
 
 Ahora si tengo información para rechazar H0
 
+### Prueba con t-studen
+### t.test
+``` R
+# la serie dada
+> serie <- c(rep(1,170),rep(2,235), rep(3,163),rep(4,105),rep(5,168),rep(6,159))
+# una serie teorica con que compararla
+> teorica <- c(rep(1,167),rep(2,167), rep(3,167),rep(4,167),rep(5,166),rep(6,166))
+> test_ttest <- t.test(serie, teorica)
+> print(test_ttest[["p.value"]])
+[1] 0.04698786
+> # [1] 0.04698786
+> # p-value < 0.05
+> 
+```
+
+## Prueba con binom.test
+## binom.test
+``` R
+test_tbinom <- binom.test(105,1000,p=1/6)
+print(test_tbinom)
+print(test_tbinom[["p.value"]])
+# [1] 3.935285e-08
+# p-value < 0.05
+```
 
