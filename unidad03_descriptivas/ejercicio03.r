@@ -34,8 +34,8 @@ paste(c("Mascotas : ",names(Mascotas)), collapse=" - ")
 
 ## 1 Analisi exploratorio
 
-# Generar el histograma de la distribución de las ventas.
-# Identificar las páginas que más ventas produjeron.
+## Generar el histograma de la distribución de las ventas.
+## Identificar las páginas que más ventas produjeron.
 
 table(Navegacion[["IdPagina"]])
 table(Navegacion[["Venta"]])

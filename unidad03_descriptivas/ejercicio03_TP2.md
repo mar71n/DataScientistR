@@ -199,28 +199,39 @@ Identificar las páginas que más ventas produjeron.
 ```
 <img src="./graficos/graph_breaks.png" width="40%" />
 
+## Actividads Base Mascotas
+1. Análisis exploratorio
+
+. Generar el histograma de la distribución de las ventas. 
+
+. Identificar las páginas que más ventas produjeron. 
+
 ## Histogramas
 ``` R
 > hist(Navegacion[Navegacion$Venta == 1 | Navegacion$Importe > 0, c(7)],breaks=100, main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0")
 ```
 <img src="./graficos/graph_Ha.png" width="40%" />
 
-``` R
-> hist(Navegacion[(Navegacion$Venta == 1 | Navegacion$Importe > 0) & Navegacion$Importe < 2500, c(7)],breaks=100, main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0 \n Importe < 2500")
-```
-<img src="./graficos/graph_Hb.png" width="40%" />
-
-``` R
-> hist(Navegacion[Navegacion$Importe > 0, c(7)],breaks=100, main="Importe > 0")
-```
-<img src="./graficos/graph_Hc.png" width="40%" />
-
+Hay una gran cantidad de ventas pequeñas, y muchas ventas con Importe = 0
 ``` R
 > range(Navegacion$Importe)
 [1]     0.00 15365.53
 > min(Navegacion[Navegacion$Importe > 0 , 7])
 [1] 0.01
 ```
+
+
+``` R
+> hist(Navegacion[(Navegacion$Venta == 1 | Navegacion$Importe > 0) & Navegacion$Importe < 2500, c(7)],breaks=100, main="Venta = 1 o Impote > 0 \n incluye 16940 Venta = 1 e Importe = 0 \n Importe < 2500")
+```
+<img src="./graficos/graph_Hb.png" width="40%" />
+
+Histograma de las ventas con importe > 0
+``` R
+> hist(Navegacion[Navegacion$Importe > 0, c(7)],breaks=100, main="Importe > 0")
+```
+<img src="./graficos/graph_Hc.png" width="40%" />
+
 Ventas x pagina
 ``` R
 > # vantas por pagina
@@ -231,13 +242,17 @@ Ventas x pagina
 > ventasi_x_pg <- aggregate(Navegacion$Importe, by = list(IdPagina = Navegacion$IdPagina), FUN="sum")
 > names(ventasi_x_pg) <- c("IdPagina", "TotalImporte")
 + ventasi_x_pg <- ventasi_x_pg[order(ventasi_x_pg$TotalImporte, decreasing=TRUE),]
-> # ventasi_x_pg
+```
+``` R
+> # vantas por pagina
 > # en cantidad de ventas de importe > 0
 > length(Navegacion$Importe[which(Navegacion$Importe > 0)])
 [1] 43093
 > ventasn_x_pg <- aggregate(Navegacion$Importe[which(Navegacion$Importe > 0)], by = list(IdPagina = Navegacion$IdPagina[which(Navegacion$Importe > 0)]), FUN="length")
 > names(ventasn_x_pg) <- c("IdPagina", "CantVentas")
 > ventasn_x_pg <- ventasn_x_pg[order(ventasn_x_pg$CantVentas, decreasing=TRUE),]
+```
+``` R
 > # ventasn_x_pg
 > # en cantidad de ventas = 1
 > length(Navegacion$Importe[which(Navegacion$Venta == 1)])
@@ -246,6 +261,16 @@ Ventas x pagina
 > names(ventasn1_x_pg) <- c("IdPagina", "CantVentas1")
 > ventasn1_x_pg <- ventasn1_x_pg[order(ventasn1_x_pg$CantVentas, decreasing=TRUE),]
 > # ventasn1_x_pg
+```
+
+Ventas por pagina, ordenadas por la suma de los importes 
+
+TotImporte es la cantidad de Importes > 0
+
+TotVentas es la cantidad de Venta == 1
+
+
+``` R
 > ventas_x_pg <- as.data.frame( cbind(ventasi_x_pg$IdPagina[order(ventasi_x_pg$IdPagina)], 
 +                 ventasi_x_pg$TotalImporte[order(ventasi_x_pg$IdPagina)],
 +                 ventasn_x_pg$CantVentas[order(ventasn_x_pg$IdPagina)],
