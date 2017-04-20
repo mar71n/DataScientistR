@@ -75,15 +75,17 @@ print(test)
 
 ## binom.test
 binom.test(105,1000,p=1/6)
-fbinom <- function(x){
+fbinomt <- function(x){
   binom.test(x,1000,p=1/6)[["p.value"]]
 }
 vapply(100:200, FUN=fbinom, c(1))
-plot(100:200, vapply(100:200, FUN=fbinom, c(1)))
+plot(100:200, vapply(100:200, FUN=fbinomt, c(1)))
 plot(function(x) pbinom(x, 1000, 1/6), 100, 200,  main = "pbinom",ylab="", type="p")
 # 95 percent confidence interval: 0.08668482 0.12567685
 qbinom(0.05, 1000, 1/6)  # 147
 qbinom(0.95, 1000, 1/6)  # 186
+abline(v=147)
+abline(v=186)
 
 ## chisq.test
 respuestas <- c(170, 235, 163, 105, 168, 159)
