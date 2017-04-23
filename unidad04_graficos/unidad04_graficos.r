@@ -147,3 +147,68 @@ setwd ("../descargas/unidad04/")
 png(file = "ejemplo_heatmap.png") # Creamos archivo y abrimos device
 heatmap(A, Rowv = NA, Colv = NA)
 dev.off()  # cerramos device
+
+## Clase interactiva
+
+## Graficos unidimencionales
+
+# graficos de lineas
+x <- c(1:100)
+y <- c(sin(x/10))
+plot(x,y)
+
+x <- c(1:100)
+y <- c(sin(x/10))
+plot(x,y)
+lines(y)
+
+# histogramas
+x <- rnorm(10000,3,1)
+y <- rnorm(5000,7,1)
+z <- rbind(x,y)
+hist(z,100)
+
+# graficos de barras
+x <- c(1:10)
+barplot(x)
+
+## Graficos bidimencionales
+
+# graficos de multiples lineas
+x <- c(1:100)
+y <- c(sin(x/10))
+z <- c(sin(x/5))
+png(file = "./graficos/multilineas_colores.png") # Creamos archivo y abrimos device
+plot(x,y,type='l', col="red")
+lines(y*0.75, col="green")
+lines(z, col="blue")
+dev.off()  # cerramos device
+
+x <- rnorm(10000,3,1)
+x2 <- rnorm(10000,20,1)
+x3 <- rbind(x,x2)
+y <- rnorm(10000,9,3)  # para que de igual que en el apunte sd = 3
+y2 <- rbind(y,2*y)
+range(y2)
+range(x3)
+plot(x3,y2)
+
+hist(x3,50)
+hist(y2,50)
+
+# Grafico de burbujas
+x=c(2,4,7,12,15)
+y=c(12,10,15,25,23)
+tamanio=c(100,120,230,340,800)
+etiqueta=c("uno","dos","tres","cuatro")
+palette(heat.colors(5))
+symbols(x,y,circle=tamanio, bg=1:length(tamanio), fg="white")
+text(x,y,etiqueta)
+palette("default")
+
+## Graficos tridimensionales
+## 3D Scatterplot
+install.packages("scatterplot3d")
+library(scatterplot3d)
+attach(mtcars)
+scatterplot3d(wt,disp,mpg, main="3D Scatterplot")
