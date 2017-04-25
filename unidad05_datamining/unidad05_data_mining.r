@@ -60,3 +60,29 @@ plot(iris_ctree)
 
 plot(iris_ctree, type='simple')
 
+# predict on test data
+testPred <- predict(iris_ctree, newdata = testData)
+table(testPred, testData$Species)
+
+## Decisions trees con el paquete rpart
+
+data("bodyfat", package = "TH.data")
+dim(bodyfat)
+head(bodyfat)
+names(bodyfat)
+
+ind <- sample(2, nrow(bodyfat), replace = TRUE, prob= c(0.7, 0.3))
+
+bodyfat.train <- bodyfat[ind==1,]
+bodyfat.train <- bodyfat[ind==2,]
+
+library(rpart)
+
+myFormula <- DEXfat ~ age + waistcirc + hipcirc + elbowbreadth + kneebreadth
+
+bodyfat_rpart <- rpart(myFormula, data = bodyfat.train, control = rpart.control(minsplit = 10))
+
+attributes(bodyfat_rpart)
+
+print(bodyfat_rpart$cptable)
+
