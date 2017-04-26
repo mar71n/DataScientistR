@@ -196,6 +196,7 @@ null device
 
 # Clase interactiva
 
+# Base, Lattice, Ggplot
 
 # Graficos unidimencionales
 
@@ -272,5 +273,8 @@ palette("default")
 install.packages("scatterplot3d")
 library(scatterplot3d)
 attach(mtcars)
+names(mtcars)
+# [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"
+#[11] "carb"
 scatterplot3d(wt,disp,mpg, main="3D Scatterplot")
 ```
