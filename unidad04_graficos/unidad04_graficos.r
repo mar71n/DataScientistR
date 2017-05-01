@@ -215,3 +215,25 @@ names(mtcars)
 # [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"
 #[11] "carb"
 scatterplot3d(wt,disp,mpg, main="3D Scatterplot")
+
+## CUESTIONARIO
+# dudas
+
+# type what type of plot should be drawn
+par(mfrow = c(3, 3))
+plot(airquality$Temp, ylim=c(50,100), type = "l")
+plot(airquality$Temp, ylim=c(50,100), type = "h")
+plot(airquality$Temp, ylim=c(50,100), type = "p")
+plot(airquality$Temp, ylim=c(50,100), type = "b")
+plot(airquality$Temp, ylim=c(50,100), type = "c")
+plot(airquality$Temp, ylim=c(50,100), type = "o")
+plot(airquality$Temp, ylim=c(50,100), type = "s")
+plot(airquality$Temp, ylim=c(50,100), type = "S")
+par(mfrow = c(1, 1))
+
+# lty The line type.
+plot(airquality$Temp, ylim=c(50,100), type = "l", lty="dashed")
+plot(airquality$Temp, ylim=c(50,100), type = "l", lty="dotted")
+plot(airquality$Temp, ylim=c(50,100), type = "l", lty="dotdash")
+plot(airquality$Temp, ylim=c(50,100), type = "l", lty="longdash")
+plot(airquality$Temp, ylim=c(50,100), type = "l", lty="twodash")
