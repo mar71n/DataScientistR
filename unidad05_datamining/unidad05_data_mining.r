@@ -44,7 +44,7 @@ ind <- sample(2, nrow(iris), replace = TRUE, prob=c(0.7, 0.3))
 trainData <- iris[ind==1,]
 testData <- iris[ind==2,]
 
-install.packages("party")
+# install.packages("party")
 library(party)
 myFormula <- Species ~ Sepal.Length + Sepal.Width + Petal.Length +  Petal.Width
 
@@ -85,4 +85,42 @@ bodyfat_rpart <- rpart(myFormula, data = bodyfat.train, control = rpart.control(
 attributes(bodyfat_rpart)
 
 print(bodyfat_rpart$cptable)
+
+## Clase interactiva
+## Árboles de decisión
+# Reducción de la cantidad de atributos
+
+Navegacion <- read.csv2("../descargas/unidad03/Mascotas_2a/Navegacion_csv.txt")
+head(Navegacion)
+nrow(Navegacion)  # [1] 1.048.573
+range(Navegacion[["IdDueño"]])  # [1]    0 7999
+Duenos <- read.csv2("../descargas/unidad03/Mascotas_2a/Duenos_csv.txt")
+head(Duenos)
+nrow(Duenos)  # [1] 5.665
+range(Duenos[["IdDueño"]])  # [1] NA NA
+Duenos[is.na(Duenos$IdDueño),]  # hay un registro con IdDueño en NA
+
+datos_cor_v_d <- merge(Navegacion, Duenos, by.x="IdDueño", by.y="IdDueño")
+head(datos_cor_v_d)
+nrow(datos_cor_v_d)  # [1] 741.887
+datos_cor_v_d[is.na(datos_cor_v_d$IdDueño),]
+
+Mascotas <- read.csv2("../descargas/unidad03/Mascotas_2a/Mascotas_csv.txt")
+head(Mascotas)
+datos_cor_v_d_m <- merge(datos_cor_v_d, Mascotas, by.x="IdDueño", by.y="IdDueño")
+head(datos_cor_v_d_m)
+nrow(datos_cor_v_d_m)  # [1] 924.214
+
+# reduccio de cantidad de atributos
+names(datos_cor_v_d_m)
+datos_cor_v_d_m$Id.x <- NULL
+datos_cor_v_d_m$Id.y <- NULL
+datos_cor_v_d_m$IdDueño <- NULL
+datos_cor_v_d_m$IdPágina <- NULL
+datos_cor_v_d_m$Sexo.x <- NULL
+datos_cor_v_d_m$Sexo.y <- NULL
+datos_cor_v_d_m$Secuencia <- NULL
+
+cor_datos <- cor(datos_cor_v_d_m)
+print(cor_datos)
 
