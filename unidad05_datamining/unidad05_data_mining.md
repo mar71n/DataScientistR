@@ -235,7 +235,7 @@ node), split, n, deviance, yval
 
 Una vez que elegimos el árbol que menor error da, y lo podamos, lo podemos usar para realizar una predicción:
 
-```R
+``` R
 > DEXfat_pred <- predict(bodyfat_prune, newdata=bodyfat.test)
 > xlim <- range(bodyfat$DEXfat)
 > xlim
@@ -246,4 +246,96 @@ Una vez que elegimos el árbol que menor error da, y lo podamos, lo podemos usar
 ```
 <img src="./graficos/predict_arbol_rpart.png" width="50%" />
 
+## Random Forest
+
+Usaremos el paquete *randomForest*. Tiene dos limitaciones, no maneja *NAs*, y maximo de atributos categoricos = 32.
+Una alternativa es **cforest()** de *party*.
+
+``` R
+> library(randomForest)
+randomForest 4.6-12
+Type rfNews() to see new features/changes/bug fixes.
+> 
+```
+
+La fórmula esta construida para *Species '~ .'*, que significa predecir *'Species'* con todas las otras variables como predictoras:
+``` R
+> rf <- randomForest(Species ~ ., data=trainData, ntree=100, proximity=TRUE)
+> table(predict(rf), trainData$Species)
+            
+             setosa versicolor virginica
+  setosa         31          0         0
+  versicolor      0         32         4
+  virginica       0          3        31
+> 
+```
+
+Para ver el error en la clasificación, podemos usar el comando **print()**
+
+``` R
+> print(rf)
+
+Call:
+ randomForest(formula = Species ~ ., data = trainData, ntree = 100,      proximity = TRUE) 
+               Type of random forest: classification
+                     Number of trees: 100
+No. of variables tried at each split: 2
+
+        OOB estimate of  error rate: 6.93%
+Confusion matrix:
+           setosa versicolor virginica class.error
+setosa         31          0         0  0.00000000
+versicolor      0         32         3  0.08571429
+virginica       0          4        31  0.11428571
+> 
+```
+En *Random Forests* estamos tratando con conjuntos de árboles de decisión. 
+Por default, los comandos de *Random Forest* seleccionan aquel *modelo que minimiza el error*.
+En su forma más simple, los modelos *difieren en el número de árboles* que contienen.
+
+Grafiquemos el error del modelo (es decir, que tan mal predice) en función del número de árboles considerados en el conjunto:
+
+``` R
+> # graficar el error del modelo
+> plot(rf)
+```
+<img src="./graficos/rf_errores.png" width="50%" />
+
+``` R
+> # el plot muestra la matrix rf$err.rate
+> # lo mejoro
+> matplot(rf$err.rate, type="l", ylab="Error", xlab="trees", main="rf")
+> legend("topright", col=palette(), legend=c("00B","setosa","versicolor","virginia"), pch=1)
+> 
+```
+<img src="./graficos/rf_errores_p.png" width="50%" />
+
+Para determinar la importancia de las variables usamos dos funciones: **importance()** y **varImpPlot()**.
+
+``` R
+> importance(rf)
+             MeanDecreaseGini
+Sepal.Length         7.359034
+Sepal.Width          1.926906
+Petal.Length        25.090438
+Petal.Width         32.084513
+> 
+```
+<img src="./graficos/importance.png" width="50%" />
+
+Una vez que estamos satisfechos con el modelo creado, debemos validarlo sobre los datos de validación. 
+Utilizamos la función **predict()**, usando el mismo modelo *('rf')* pero los datos de validación *('testData')*. 
+Luego, podemos comparar la predicción con el valor real, que está en 'testData$Species':
+
+``` R
+> # prediccion y comparacion
+> irisPred <- predict(rf, newdata=testData)
+> table(irisPred, testData$Species)
+            
+irisPred     setosa versicolor virginica
+  setosa         10          0         0
+  versicolor      0         12         1
+  virginica       0          0        15
+> 
+```
 

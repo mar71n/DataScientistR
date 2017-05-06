@@ -110,6 +110,39 @@ xlim <- range(bodyfat$DEXfat)
 plot(DEXfat_pred ~ DEXfat, data=bodyfat.test, xlab="Observed", ylab="Predicted", ylim=xlim, xlim=xlim)
 abline(a=0, b=1)
 
+## Random Forest
+# seleccion de muestras
+ind <- sample(2, nrow(iris), replace=TRUE, prob=c(0.7, 0.3))
+trainData <- iris[ind==1,]
+testData <- iris[ind==2,]
+
+# install.packages("randomForest")
+library(randomForest)
+
+# creamos el randomfores
+rf <- randomForest(Species ~ ., data=trainData, ntree=100, proximity=TRUE)
+table(predict(rf), trainData$Species)
+
+# ver error de clasificacion
+print(rf)
+
+# graficar el error del modelo
+plot(rf)
+
+# el plot muestra la matrix rf$err.rate
+# lo mejoro
+matplot(rf$err.rate, type="l", ylab="Error", xlab="trees", main="rf")
+legend("topright", col=palette(), legend=c("00B","setosa","versicolor","virginia"), pch=1)
+
+# importancia de las variables predictoras
+importance(rf)
+
+varImpPlot(rf)
+
+# prediccion y comparacion contra testData
+irisPred <- predict(rf, newdata=testData)
+table(irisPred, testData$Species)
+
 ## Clase interactiva
 ## Árboles de decisión
 # Reducción de la cantidad de atributos
