@@ -140,4 +140,110 @@ testPred     setosa versicolor virginica
 
 Solo dos elementos fuera de la diagonal. Muy bueno.
 
+## Decision tree con el paquete rpart
+
+La funcion **rpart()** construye el arbol. El paquete *rpart* evalua automaticamente varios arboles.
+
+``` R
+> # seleccion de muestras
+> data("bodyfat", package = "TH.data")
+> ind <- sample(2, nrow(bodyfat), replace = TRUE, prob= c(0.7, 0.3))
+> bodyfat.train <- bodyfat[ind==1,]
+> bodyfat.test <- bodyfat[ind==2,]
+> 
+```
+
+Notemos que nuestra variable objetivo es *'DEXfat'*, y que las variables predictoras son *'age', 'waistcirc', 'hipcirc', 'elbowbreadth', 'kneebreadth'*:
+``` R
+> # construir el arbol
+> library(rpart)
+> myFormula <- DEXfat ~ age + waistcirc + hipcirc + elbowbreadth + kneebreadth
+> bodyfat_rpart <- rpart(myFormula, data = bodyfat.train, control = rpart.control(minsplit = 10))
+```
+
+``` R
+> attributes(bodyfat_rpart)
+$names
+ [1] "frame"               "where"               "call"
+ [4] "terms"               "cptable"             "method"
+ [7] "parms"               "control"             "functions"
+[10] "numresp"             "splits"              "variable.importance"
+[13] "y"                   "ordered"
+
+$xlevels
+named list()
+
+$class
+[1] "rpart"
+```
+
+La variable *'cptable'* dentro del modelo contiene la evolución del error del árbol de decisión a medida que se agregan divisiones (automáticamente):
+``` R
+> print(bodyfat_rpart$cptable)
+          CP nsplit  rel error    xerror      xstd
+          CP nsplit  rel error    xerror       xstd
+1 0.70184988      0 1.00000000 1.0362533 0.20711021
+2 0.08495554      1 0.29815012 0.3710943 0.10083249
+3 0.05234206      2 0.21319459 0.3616000 0.09585713
+4 0.02577515      3 0.16085253 0.3456613 0.09015238
+5 0.01995049      4 0.13507738 0.3145581 0.07391517
+6 0.01857568      5 0.11512689 0.2925126 0.07452136
+7 0.01000000      6 0.09655122 0.2841753 0.07589455
+> 
+```
+
+``` R
+> # el minimo xerror
+> opt <- which.min(bodyfat_rpart$cptable[,"xerror"])
+> opt
+7 
+7 
+```
+
+``` R
+> # el CP correspondiente
+> cp <- bodyfat_rpart$cptable[opt, "CP"]
+> cp
+[1] 0.01
+> 
+```
+
+``` R
+> # podamos aplicando prune() al arbol del modelo original (bodyfat_rpart) con CP = cp
+> bodyfat_prune <- prune(bodyfat_rpart, cp = cp)
+> print(bodyfat_prune)
+n= 47 
+
+node), split, n, deviance, yval
+      * denotes terminal node
+
+ 1) root 47 5315.88100 30.00128 
+   2) hipcirc< 108 30  881.31110 23.29433 
+     4) hipcirc< 98 16  217.85240 19.66500 
+       8) age< 55.5 7   61.33357 16.74571 *
+       9) age>=55.5 9   50.46442 21.93556 *
+     5) hipcirc>=98 14  211.84520 27.44214 
+      10) waistcirc< 76.5 3   11.81447 22.35667 *
+      11) waistcirc>=76.5 11  101.28470 28.82909 *
+   3) hipcirc>=108 17  703.61940 41.83706 
+     6) waistcirc< 106 14  219.83390 39.96429 
+      12) hipcirc< 116.4 8   67.67580 37.25500 *
+      13) hipcirc>=116.4 6   15.14053 43.57667 *
+     7) waistcirc>=106 3  205.54130 50.57667 *
+> 
+```
+
+Una vez que elegimos el árbol que menor error da, y lo podamos, lo podemos usar para realizar una predicción:
+
+```R
+> DEXfat_pred <- predict(bodyfat_prune, newdata=bodyfat.test)
+> xlim <- range(bodyfat$DEXfat)
+> xlim
+[1] 11.21 62.02
+> plot(DEXfat_pred ~ DEXfat, data=bodyfat.test, xlab="Observed", ylab="Predicted", ylim=xlim, xlim=xlim)
+> abline(a=0, b=1)
+> 
+```
+<img src="./graficos/predict_arbol_rpart.png" width="50%" />
+
 

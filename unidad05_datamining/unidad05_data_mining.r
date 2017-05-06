@@ -73,6 +73,7 @@ table(testPred, testData$Species)
 
 ## Decisions trees con el paquete rpart
 
+# seleccion de muestras
 data("bodyfat", package = "TH.data")
 dim(bodyfat)
 head(bodyfat)
@@ -81,8 +82,9 @@ names(bodyfat)
 ind <- sample(2, nrow(bodyfat), replace = TRUE, prob= c(0.7, 0.3))
 
 bodyfat.train <- bodyfat[ind==1,]
-bodyfat.train <- bodyfat[ind==2,]
+bodyfat.test <- bodyfat[ind==2,]
 
+# construir el arbol
 library(rpart)
 
 myFormula <- DEXfat ~ age + waistcirc + hipcirc + elbowbreadth + kneebreadth
@@ -92,6 +94,21 @@ bodyfat_rpart <- rpart(myFormula, data = bodyfat.train, control = rpart.control(
 attributes(bodyfat_rpart)
 
 print(bodyfat_rpart$cptable)
+
+# el minimo xerror
+opt <- which.min(bodyfat_rpart$cptable[,"xerror"])
+# el CP correspondiente
+cp <- bodyfat_rpart$cptable[opt, "CP"]
+
+# podamos aplicando prune() al arbol del modelo original (bodyfat_rpart) con CP = cp
+bodyfat_prune <- prune(bodyfat_rpart, cp = cp)
+print(bodyfat_prune)
+
+# las prediciones con predict()
+DEXfat_pred <- predict(bodyfat_prune, newdata=bodyfat.test)
+xlim <- range(bodyfat$DEXfat)
+plot(DEXfat_pred ~ DEXfat, data=bodyfat.test, xlab="Observed", ylab="Predicted", ylim=xlim, xlim=xlim)
+abline(a=0, b=1)
 
 ## Clase interactiva
 ## Árboles de decisión
