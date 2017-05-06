@@ -39,25 +39,32 @@ heatmap(distMatrix)
 
 ## Decision tree con el paquete party
 
+# seleccion de muestras
 set.seed(1234)
 ind <- sample(2, nrow(iris), replace = TRUE, prob=c(0.7, 0.3))
 trainData <- iris[ind==1,]
 testData <- iris[ind==2,]
 
+# construir el arbol
 # install.packages("party")
 library(party)
 myFormula <- Species ~ Sepal.Length + Sepal.Width + Petal.Length +  Petal.Width
 
 iris_ctree <- ctree(myFormula, data = trainData)
 
+# obtener las predicciones
 table(predict(iris_ctree), trainData$Species)
 
+# ver las predicciones en detalle
 predict(iris_ctree)
 
+# ver las reglas para el arbol construido
 print(iris_ctree)
 
+# graficar el arbol
 plot(iris_ctree)
 
+# graficar el arbol menos detalles
 plot(iris_ctree, type='simple')
 
 # predict on test data
