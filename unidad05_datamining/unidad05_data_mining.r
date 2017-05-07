@@ -48,11 +48,11 @@ testData <- iris[ind==2,]
 # construir el arbol
 # install.packages("party")
 library(party)
+# obtener las predicciones
 myFormula <- Species ~ Sepal.Length + Sepal.Width + Petal.Length +  Petal.Width
-
 iris_ctree <- ctree(myFormula, data = trainData)
 
-# obtener las predicciones
+# comparar con el set de training
 table(predict(iris_ctree), trainData$Species)
 
 # ver las predicciones en detalle
@@ -251,6 +251,19 @@ train_tree <- ctree(formula, data = h_train)
 plot(train_tree, type="simple")
 
 # corrijo controls
-train_tree <- ctree(formula, data = h_train, controls = ctree_control(mincriterion = .42))
+train_tree <- ctree(formula, data = h_train, controls = ctree_control(mincriterion = .6))
 plot(train_tree,type="simple")
 
+## Paquete rpart
+library(rpart)
+formula <- Venta ~ Edad.y + Edad.x + Ingreso + Peso
+train_tree <- rpart(formula, data = h_train)
+plot(train_tree)
+
+# corrijo parametro cp
+train_tree <- rpart(formula, data = h_train, cp=.000073)
+print(train_tree)
+plot(train_tree)
+
+train_tree$cptable
+train_tree$variable.importance
