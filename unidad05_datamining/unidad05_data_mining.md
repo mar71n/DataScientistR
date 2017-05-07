@@ -11,7 +11,7 @@
 Para cada atributo no utilizado busco el que mejor divide, asi hasta que no quedan atributos o ninguno divide bien.
 Los algoritmos más difundidos son *CART*, *Ganancia de Entropía*, *C4.5* y *DKM*
 
-**Podas:** Probando con el set de *testing*, eliminar las diviciones que no cumplan algun estandar de calidad. Estas incurren en *Sobre Ajuste*, ie. se fijan en casos particulares de la muestra pero irrelevantes en el universo.
+**Podas:** Probando con el set de *testing*, eliminar las diviciones que no cumplan algun estandar de calidad. Estas incurren en **Sobre Ajuste**, ie. se fijan en casos particulares de la muestra pero irrelevantes en el universo.
 
 * Prepoda: durante la construccion si ya veo que el nodo no conduce a nada.
 
