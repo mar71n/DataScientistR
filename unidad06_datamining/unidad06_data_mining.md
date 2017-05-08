@@ -93,4 +93,94 @@ ahora usemos pam() indicando 3 clusters
 No es sencillo determinar cual de los dos métodos presentados es el mejor (sin saber de antemano el resultado!)
 Siguiendo con el ejemplo de clustering, una buena práctica sería probar varias técnicas (y distintos parámetros para cada una de ellas) y luego promediar los resultados.
 
+## Clustering jerárquico
 
+Se parte de una matriz de distancias y se construye una jerarquia en base a esas distancias.
+
+* **Aglomerativos (bottom up)** Comienza por los elementos individuales y los va agregando a grupos. Primero los dos que están mas *"cerca"*, los agrupa en un nuevo elemento, y así...
+* **De division (top down)** Parte del total y lo ca subdividiendo. Divide primero en dos grupos tales que simultaneamente minimisan alguna distancia entre los miembros, y maximisa esa distancia con los del otro grupo, y así...
+
+La funcio **hclust()** implementa la tecnica aglomerativa.
+
+``` R
+> # trabajo en una copia
+> iris2 <- iris
+> # vacio la variable objetivo
+> iris2$Species <- NULL
+```
+
+``` R
+> # armo el cluster y lo guardo en hc
+> hc <- hclust(dist(iris2), method="complete")
+> plot(hc, hang = -2, labels = FALSE)
+> rect.hclust(hc, k=3)
+```
+<img src="./graficos/dendogram_hclust.png" width="50%" />
+
+``` R
+> groups <- cutree(hc, k=3)
+> table(iris$Species, groups)
+            groups
+              1  2  3
+  setosa     50  0  0
+  versicolor  0 23 27
+  virginica   0 49  1
+> 
+```
+
+## Clustering basado en densidad
+
+La idea es agrupar objetos en un cluster si estos estanconectados mediante áreas densamente pobladas.
+
+Vemos un ejemplo del algoritmo **DBSCAN**.
+
+Hay dos parámetros importantes en DBSCAN: 1) *eps* tamaño de entorno, 2) *MinPts* número de puntos, si el número de puntos e nun entorno es mayor a MinPts entonces es un punto denso.
+
+Todos los puntos en el entorno alcanzable por la densidad son puestos en el mismo cluster.
+
+La ventaja de este método es que puede descubrir cluster de varias frmas y tamaños y no es sensible al ruido. (k-means tiende a encontrar clusters con forma de esfera y de tamaños similares)
+
+``` R
+> # install.packages("fpc")
+> library(fpc)
+> # requiere que la clase objetivo no este presente
+> iris2 <- iris[-5]
+```
+``` R
+> # genero los cluster y los comparo
+> ds <- dbscan(iris2, eps=0.42, MinPts=5)
+> table(ds$cluster, iris$Species)
+   
+    setosa versicolor virginica
+  0      2         10        17
+  1     48          0         0
+  2      0         37         0
+  3      0          3        33
+```
+La fila 0 son los valores identificados como *ruido* u *outliers*.
+
+El **plot()** los muestra como circulos negros.
+
+``` R
+# grafico
+> plot(ds, iris2)
+> 
+```
+<img src="./graficos/plot_dbscan.png" width="50%" />
+
+Notar que no le dije de antemano cuantos cluster hay. Bastante bien.
+
+algunos subgraficos
+``` R
+> plot(ds, iris2[c(1,4)])
+```
+<img src="./graficos/subgrafico.png" width="50%" />
+
+se pueden mostra los cluster con:
+``` R
+> plotcluster(iris2, ds$cluster)
+> 
+```
+<img src="./graficos/plotcluster.png" width="50%" />
+
+Lo interesante de esta tecnica es (i) es robusta y da buenos resultados (ii) no es necesario adelantar el numero de clusters (iii) tiene en cuenta los valores extremos y en lugar de 'ensuciar' decide no considerarlos.

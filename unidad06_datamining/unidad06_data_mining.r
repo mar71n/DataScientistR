@@ -45,3 +45,37 @@ table(pam.result$clustering, iris$Species)
 layout(matrix(c(1,2),1,2)) # 2 graficos por pagina
 plot(pam.result)
 
+## Clustering jerárquico
+
+# trabajo en una copia
+iris2 <- iris
+# vacio la variable objetivo
+iris2$Species <- NULL
+
+# armo el cluster y lo guardo en hc
+hc <- hclust(dist(iris2), method="complete")
+plot(hc, hang = -2, labels = FALSE)
+rect.hclust(hc, k=3)
+
+groups <- cutree(hc, k=3)
+table(iris$Species, groups)
+
+## Clustering basado en densidad
+
+# install.packages("fpc")
+library(fpc)
+# requiere que la clase objetivo no este presente
+iris2 <- iris[-5]
+
+# genero los cluster y los comparo
+ds <- dbscan(iris2, eps=0.42, MinPts=5)
+table(ds$cluster, iris$Species)
+
+# grafico
+plot(ds, iris2)
+
+# algunos subgraficos
+plot(ds, iris2[c(1,4)])
+
+# se pueden mostra los cluster con:
+plotcluster(iris2, ds$cluster)
