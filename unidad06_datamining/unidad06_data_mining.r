@@ -79,3 +79,27 @@ plot(ds, iris2[c(1,4)])
 
 # se pueden mostra los cluster con:
 plotcluster(iris2, ds$cluster)
+
+
+## ejemplo etiquetar datos nuevos
+
+library(fpc)
+# requiere que la clase objetivo no este presente
+iris2 <- iris[-5]
+
+# genero los cluster y los comparo
+ds <- dbscan(iris2, eps=0.42, MinPts=5)
+
+set.seed(877)
+idx <- sample(1:nrow(iris), 10)
+newData <- iris[idx,-5]
+# ruidos aleatorios generados con una distribución uniforme mediante la función runif().
+newData <- newData + matrix(runif(10*4, min=0, max=0.2), nrow=10, ncol=4)
+# etiquetamos los datos nuevos
+myPred <- predict(ds, iris2, newData)
+# plot result
+plot(iris2[c(1,4)], col=1+ds$cluster)
+points(newData[c(1,4)], pch="*", col=1+myPred, cex=3)
+
+# chequamos los clusters
+table(myPred, iris$Species[idx])

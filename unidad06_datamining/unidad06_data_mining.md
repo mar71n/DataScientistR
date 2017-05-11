@@ -184,3 +184,47 @@ se pueden mostra los cluster con:
 <img src="./graficos/plotcluster.png" width="50%" />
 
 Lo interesante de esta tecnica es (i) es robusta y da buenos resultados (ii) no es necesario adelantar el numero de clusters (iii) tiene en cuenta los valores extremos y en lugar de 'ensuciar' decide no considerarlos.
+
+Recordemos que siempre debemos tener cuidado con este enfoque: **el clustering no tiene de por sí valor predictivo**, y no debe pensarse que tiene la misma potencia predictiva que las **técnicas de clasificación y regresión**.
+
+## Ejemplo de etiquetar datos nuevos
+
+``` R
+> library(fpc)
+> # requiere que la clase objetivo no este presente
++ iris2 <- iris[-5]
++ # genero los cluster y los comparo
+> ds <- dbscan(iris2, eps=0.42, MinPts=5)
+> set.seed(877)
+> idx <- sample(1:nrow(iris), 10)
+> newData <- iris[idx,-5]
+```
+``` R
+> # ruidos aleatorios generados con una distribución uniforme mediante la función runif().
+> newData <- newData + matrix(runif(10*4, min=0, max=0.2), nrow=10, ncol=4)
+> # etiquetamos los datos nuevos
+> myPred <- predict(ds, iris2, newData)
+> # plot result
+> plot(iris2[c(1,4)], col=1+ds$cluster)
+> points(newData[c(1,4)], pch="*", col=1+myPred, cex=3)
+> plot(iris2[c(1,4)], col=1+ds$cluster)
+> points(newData[c(1,4)], pch="*", col=1+myPred, cex=3)
+```
+<img src="./graficos/dbscan_predic_nuevos.png" width="50%" />
+
+
+``` R
+> # chequamos los clusters
+> table(myPred, iris$Species[idx])
+      
+myPred setosa versicolor virginica
+     1      2          0         0
+     2      0          3         0
+     3      0          0         5
+> 
+```
+
+Si repitiéramos esta predicción varias veces, no siempre obtendríamos tan buena precisión. El promedio en precisión ronda el 70% (lo cual no es para nada despreciable!).
+
+
+
