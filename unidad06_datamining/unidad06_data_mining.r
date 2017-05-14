@@ -103,3 +103,58 @@ points(newData[c(1,4)], pch="*", col=1+myPred, cex=3)
 
 # chequamos los clusters
 table(myPred, iris$Species[idx])
+
+## Support Vector Machines
+
+# install.packages("e1071")
+# install.packages("mlbench")
+library(e1071)
+library(rpart)
+# separo los datos en trainset y testset
+data(Glass, package="mlbench")
+index <- 1:nrow(Glass)
+testindex <- sample(index, trunc(length(index)/3))
+testset <- Glass[testindex,]
+trainset <- Glass[-testindex,]
+
+# comparar modelo basado en SVM con otro basado en árboles de decision.
+
+# svm
+svm.model <- svm(Type ~ ., data = trainset, cost = 100, gamma= 1)
+svm.pred <- predict(svm.model, testset[,-10])  # La variable dependiente 'Type' está en la columna número 10
+
+# rpart
+rpart.model <- rpart(Type ~ ., data = trainset)
+rpart.pred <- predict(rpart.model, testset[,-10], type= "class")
+
+# SVM
+table(pred = svm.pred, true = testset[,10])
+
+# Arbol
+table(pred = rpart.pred, true = testset[,10])
+
+# analisi de una aplicacion de regresion no lineal
+library(e1071)
+library(rpart)
+data(Ozone, package="mlbench")
+# split data into a train and test set
+index <- 1:nrow(Ozone)
+testindex <- sample(index, trunc(length(index)/3))
+testset <- na.omit(Ozone[testindex,-3])
+trainset <- na.omit(Ozone[-testindex,-3])
+
+# svm
+svm.model <- svm(V4 ~ ., data = trainset, cost = 1000, gamma =0.0001)
+svm.pred <- predict(svm.model, testset[,-3])
+# rpart
+rpart.model <- rpart(V4 ~ ., data = trainset)
+rpart.pred <- predict(rpart.model, testset[,-3])
+
+# Una manera rápida de comparar los resultados es con un gráfico de dispersión:
+# SVM
+plot(svm.pred,testset$V4)
+abline(0,1)
+
+# arbol
+plot(rpart.pred,testset$V4)
+abline(0,1)

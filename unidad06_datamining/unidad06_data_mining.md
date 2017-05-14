@@ -226,5 +226,114 @@ myPred setosa versicolor virginica
 
 Si repitiéramos esta predicción varias veces, no siempre obtendríamos tan buena precisión. El promedio en precisión ronda el 70% (lo cual no es para nada despreciable!).
 
+---
+---
 
+## Support Vector Machines
+
+Esta una técnica poderosa aplicable a casos de clasificaciones generales, regresiones (lineales y no lineales), y que también puede utilizarse con mucho éxito para la detección de ouliers.
+
+``` R
+> # install.packages("e1071")
+> # install.packages("mlbench")
+> library(e1071)
+> library(rpart)
+```
+``` R
+> # separo los datos en trainset y testset
+> data(Glass, package="mlbench")
+> index <- 1:nrow(Glass)
+> testindex <- sample(index, trunc(length(index)/3))
+> testset <- Glass[testindex,]
+> trainset <- Glass[-testindex,]
+> 
+```
+* Comparar el rendimiento de un modelo basado en **SVM** usando la función **svm()** y otro basado en **árboles de decisión** usando **rpart()**. Tanto para SVM como para el árbol de particionamiento usando **rpart()**, construiremos el modelo usando el set de entrenamiento (*training*), y predecimos los valores del set de validación (*testing*).
+
+``` R
+> ## svm
+> svm.model <- svm(Type ~ ., data = trainset, cost = 100, gamma= 1)
+> svm.pred <- predict(svm.model, testset[,-10])
+> 
+```
+El parámetro 'cost' de la función svm() es un parámetro de penalización general para la clasificación de clases, y 'gamma' es el parámetro que indica el kernel con las funciones de base radial.
+
+``` R
+> ## rpart
+> rpart.model <- rpart(Type ~ ., data = trainset)
+> rpart.pred <- predict(rpart.model, testset[,-10], type= "class")
+> 
+```
+Veamos una tabla de los valores reales versus los valores predecidos para los dos modelos:
+``` R
+> # SVM
+> table(pred = svm.pred, true = testset[,10])
+    true
+pred  1  2  3  5  6  7
+   1 18  4  4  0  0  0
+   2  7 13  2  3  4  5
+   3  1  0  0  0  0  0
+   5  0  0  0  1  0  0
+   6  0  0  0  0  0  0
+   7  0  0  0  0  0  9
+```
+``` R
+> # Arbol
+> table(pred = rpart.pred, true = testset[,10])
+    true
+pred  1  2  3  5  6  7
+   1 23  5  3  0  1  0
+   2  3 10  3  0  2  0
+   3  0  0  0  0  0  0
+   5  0  2  0  3  1  1
+   6  0  0  0  0  0  0
+   7  0  0  0  1  0 13
+> 
+```
+De las tablas de comparación resulta mejor donde el número de valores no nulos fuera de la diagonal es menor.
+
+* Analicemos ahora una aplicación de regresión no lineal.
+
+``` R
+> library(e1071)
+> library(rpart)
+> data(Ozone, package="mlbench")
+> # split data into a train and test set
+> index <- 1:nrow(Ozone)
+> testindex <- sample(index, trunc(length(index)/3))
+> testset <- na.omit(Ozone[testindex,-3])
+> trainset <- na.omit(Ozone[-testindex,-3])
+> 
+```
+
+``` R
+> # svm
+> svm.model <- svm(V4 ~ ., data = trainset, cost = 1000, gamma =0.0001)
+> svm.pred <- predict(svm.model, testset[,-3])
+```
+``` R
+> # rpart
+> rpart.model <- rpart(V4 ~ ., data = trainset)
+> rpart.pred <- predict(rpart.model, testset[,-3])
+> 
+```
+Una manera rápida de comparar los resultados es con un gráfico de dispersión:
+
+``` R
+> # SVM
+> plot(svm.pred,testset$V4)
+> abline(0,1)
+> 
+```
+<img src="./graficos/svm_cor.png" width="50%" />
+
+``` R
+> # arbol
+> plot(rpart.pred,testset$V4)
+> abline(0,1)
+> 
+```
+<img src="./graficos/arbol_cor.png" width="50%" />
+
+Claramente, el modelo generado con la técnica de Support Vector Machines es superior al generado con el árbol de decisión.
 
