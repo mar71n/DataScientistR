@@ -126,6 +126,9 @@ svm.pred <- predict(svm.model, testset[,-10])  # La variable dependiente 'Type' 
 # rpart
 rpart.model <- rpart(Type ~ ., data = trainset)
 rpart.pred <- predict(rpart.model, testset[,-10], type= "class")
+# pruebo graficarlo con los textos
+plot(rpart.model)
+text(rpart.model)
 
 # SVM
 table(pred = svm.pred, true = testset[,10])

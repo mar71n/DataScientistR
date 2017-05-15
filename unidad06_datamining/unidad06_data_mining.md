@@ -337,3 +337,12 @@ Una manera rápida de comparar los resultados es con un gráfico de dispersión:
 
 Claramente, el modelo generado con la técnica de Support Vector Machines es superior al generado con el árbol de decisión.
 
+## Clase interactiva
+# Supor Vector Machines (máquina de soporte vectorial)
+El algoritmo inenta dividir en un hiperplano (una variedad lineal con una dimension menos que el espacio)
+
+Factor de ajuste
+
+Tolerar puntos mal clasificados
+
+Tratar de minimizar la cantidad de puntos mal clasiicados.
