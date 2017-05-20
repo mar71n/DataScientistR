@@ -1,4 +1,4 @@
-# Data Mining
+# Data Mining U6
 
 ## Clustering: k-medoids
 
